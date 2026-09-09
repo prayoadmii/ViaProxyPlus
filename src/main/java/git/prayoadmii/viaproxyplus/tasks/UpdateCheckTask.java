@@ -51,7 +51,7 @@ public class UpdateCheckTask implements Runnable {
     public void run() {
         if (VERSION.startsWith("$")) return; // Dev env check
         try {
-            URL url = URI.create("https://api.github.com/repos/RaphiMC/ViaProxy/releases/latest").toURL();
+            URL url = URI.create("https://api.github.com/repos/prayoadmii/ViaProxyPlus/releases/latest").toURL();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "ViaProxyPlus/" + VERSION);
@@ -66,7 +66,7 @@ public class UpdateCheckTask implements Runnable {
             con.disconnect();
 
             JsonObject object = JsonParser.parseString(builder.toString()).getAsJsonObject();
-            String latestVersion = object.get("tag_name").getAsString().substring(1);
+            String latestVersion = getReleaseVersion(object.get("tag_name").getAsString());
             boolean updateAvailable;
             try {
                 Semver versionSemver = new Semver(VERSION);
@@ -125,6 +125,14 @@ public class UpdateCheckTask implements Runnable {
 
     private boolean isMainViaProxyJar(final JsonObject root, final JsonObject assetObject) {
         return assetObject.get("name").getAsString().equals(root.get("name").getAsString() + ".jar");
+    }
+
+    private String getReleaseVersion(final String tagName) {
+        final String versionPrefix = "ViaProxyPlus_";
+        if (tagName.startsWith(versionPrefix)) {
+            return tagName.substring(versionPrefix.length()).replaceFirst("^v", "");
+        }
+        return tagName.replaceFirst("^v", "");
     }
 
     private boolean isJava8ViaProxyJar(final JsonObject root, final JsonObject assetObject) {
