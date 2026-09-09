@@ -126,7 +126,7 @@ public class ExternalInterface {
                 }
             } else if (proxyConnection.getUserOptions().account() instanceof ElyByAccount elyByAccount) {
                 try {
-                    AuthLibServices.SESSION_SERVICE.joinServer(elyByAccount.getUUID(), elyByAccount.getAccessToken(), serverIdHash);
+                    ElyByAuthLibServices.SESSION_SERVICE.joinServer(elyByAccount.getUUID(), elyByAccount.getAccessToken(), serverIdHash);
                 } catch (Throwable e) {
                     proxyConnection.kickClient("§cFailed to authenticate with Ely.by servers! Please try again in a couple of seconds.");
                 }

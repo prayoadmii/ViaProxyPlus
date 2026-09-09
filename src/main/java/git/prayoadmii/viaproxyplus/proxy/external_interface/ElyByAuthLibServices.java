@@ -17,17 +17,8 @@
  */
 package git.prayoadmii.viaproxyplus.proxy.external_interface;
 
-import com.mojang.authlib.Environment;
-import com.mojang.authlib.GameProfileRepository;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
-
-import java.net.Proxy;
-
 public class ElyByAuthLibServices {
 
-    public static final YggdrasilAuthenticationService AUTHENTICATION_SERVICE = new YggdrasilAuthenticationService(Proxy.NO_PROXY, new Environment("ely.by", "https://authserver.ely.by", "https://authserver.ely.by"));
-    public static final MinecraftSessionService SESSION_SERVICE = AUTHENTICATION_SERVICE.createMinecraftSessionService();
-    public static final GameProfileRepository PROFILE_REPOSITORY = AUTHENTICATION_SERVICE.createProfileRepository();
+    public static final ElyByMinecraftSessionService SESSION_SERVICE = new ElyByMinecraftSessionService();
 
 }
