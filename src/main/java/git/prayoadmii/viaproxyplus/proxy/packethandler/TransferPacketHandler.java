@@ -45,9 +45,9 @@ public class TransferPacketHandler extends PacketHandler {
                 transferPacket.host = this.proxyConnection.getClientHandshakeAddress().getHost();
                 transferPacket.port = this.proxyConnection.getClientHandshakeAddress().getPort();
             } else {
-                Logger.u_warn("transfer", this.proxyConnection, "Client handshake address is invalid, using ViaProxy bind address instead");
+                Logger.u_warn("transfer", this.proxyConnection, "Client handshake address is invalid, using ViaProxyPlus bind address instead");
                 if (!(ViaProxy.getCurrentProxyServer().getChannel().localAddress() instanceof InetSocketAddress bindAddress)) {
-                    throw new IllegalArgumentException("ViaProxy bind address must be an InetSocketAddress");
+                    throw new IllegalArgumentException("ViaProxyPlus bind address must be an InetSocketAddress");
                 }
                 if (!(this.proxyConnection.getC2P().localAddress() instanceof InetSocketAddress clientAddress)) {
                     throw new IllegalArgumentException("Client address must be an InetSocketAddress");

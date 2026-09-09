@@ -48,24 +48,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-@OptConfig(header = "ViaProxy configuration file", version = 1)
+@OptConfig(header = "ViaProxyPlus configuration file", version = 1)
 public class ViaProxyConfig {
 
     private ConfigContext<ViaProxyConfig> configContext;
 
     @NotReloadable
     @Option("bind-address")
-    @Description("The address ViaProxy should listen for connections.")
+    @Description("The address ViaProxyPlus should listen for connections.")
     @TypeSerializer(SocketAddressTypeSerializer.class)
     private SocketAddress bindAddress = AddressUtil.parse("0.0.0.0:25568", null);
 
     @Option(value = "target-address", dependencies = "target-version")
-    @Description("The address of the server ViaProxy should connect to.")
+    @Description("The address of the server ViaProxyPlus should connect to.")
     @TypeSerializer(TargetAddressTypeSerializer.class)
     private SocketAddress targetAddress = AddressUtil.parse("127.0.0.1:25565", null);
 
     @Option("target-version")
-    @Description("The version ViaProxy should translate to. (See ViaProxy GUI for a list of versions)")
+    @Description("The version ViaProxyPlus should translate to. (See ViaProxyPlus GUI for a list of versions)")
     @TypeSerializer(ProtocolVersionTypeSerializer.class)
     private ProtocolVersion targetVersion = ProtocolTranslator.AUTO_DETECT_PROTOCOL;
 
@@ -93,7 +93,7 @@ public class ViaProxyConfig {
     private AuthMethod authMethod = AuthMethod.NONE;
 
     @Option(value = "minecraft-account-index", dependencies = "auth-method")
-    @Description("The GUI account list index (0 indexed) of the account if the auth method is set to account.")
+    @Description("The ViaProxyPlus GUI account list index (0 indexed) of the account if the auth method is set to account.")
     @TypeSerializer(AccountTypeSerializer.class)
     private Account account = null;
 
@@ -136,7 +136,7 @@ public class ViaProxyConfig {
 
     @Option("ignore-protocol-translation-errors")
     @Description({
-            "Enabling this will prevent getting disconnected from the server when a packet translation error occurs and instead only print the error in the console.",
+            "Enabling this will prevent getting disconnected from the server when a packet translation error occurs and instead only print the error in the ViaProxyPlus console.",
             "This may cause issues depending on the type of packet which failed to translate."
     })
     private boolean ignoreProtocolTranslationErrors = false;
@@ -149,7 +149,7 @@ public class ViaProxyConfig {
     private boolean suppressClientProtocolErrors = false;
 
     @Option("allow-legacy-client-passthrough")
-    @Description("Allow <= 1.6.4 clients to connect through ViaProxy to the target server. (No protocol translation or packet handling)")
+    @Description("Allow <= 1.6.4 clients to connect through ViaProxyPlus to the target server. (No protocol translation or packet handling)")
     private boolean allowLegacyClientPassthrough = false;
 
     @Option("bungeecord-player-info-passthrough")
@@ -168,7 +168,7 @@ public class ViaProxyConfig {
 
     @Option("rewrite-transfer-packets")
     @Description({
-            "Enabling this will rewrite transfer packets to point back to ViaProxy. This allows ViaProxy to perform protocol translation when forwarding the player to the actual server from the transfer packet.",
+            "Enabling this will rewrite transfer packets to point back to ViaProxyPlus. This allows ViaProxyPlus to perform protocol translation when forwarding the player to the actual server from the transfer packet.",
             "This should be left enabled unless you are a server owner and the servers you are transferring to perform their own protocol translation."
     })
     private boolean rewriteTransferPackets = true;

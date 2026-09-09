@@ -39,7 +39,7 @@ public class ViaProxyTransferProvider implements TransferProvider {
             TransferDataHolder.addCookieStorage(channel, user.get(CookieStorage.class));
         }
         try {
-            ProxyConnection.fromUserConnection(user).kickClient("§aThe server transferred you to another server §7(§e" + newAddress.getHostName() + ":" + newAddress.getPort() + "§7)§a. Please reconnect to ViaProxy.");
+            ProxyConnection.fromUserConnection(user).kickClient("§aThe server transferred you to another server §7(§e" + newAddress.getHostName() + ":" + newAddress.getPort() + "§7)§a. Please reconnect to ViaProxyPlus.");
         } catch (CloseAndReturn ignored) {
         }
     }

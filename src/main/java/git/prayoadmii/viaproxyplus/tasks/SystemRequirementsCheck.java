@@ -25,7 +25,7 @@ public class SystemRequirementsCheck {
 
     public static void run(final boolean hasUI) {
         if ("32".equals(System.getProperty("sun.arch.data.model")) && Runtime.getRuntime().maxMemory() < 256 * 1024 * 1024) {
-            Logger.LOGGER.fatal("ViaProxy is not able to run on 32-Bit Java. Please install 64-Bit Java.");
+            Logger.LOGGER.fatal("ViaProxyPlus is not able to run on 32-Bit Java. Please install 64-Bit Java.");
             if (hasUI) {
                 JOptionPane.showMessageDialog(null, "ViaProxyPlus is not able to run on 32-Bit Java. Please install 64-Bit Java.", "ViaProxyPlus", JOptionPane.ERROR_MESSAGE);
             }
@@ -33,13 +33,13 @@ public class SystemRequirementsCheck {
         }
 
         if (Runtime.getRuntime().maxMemory() < 256 * 1024 * 1024) {
-            Logger.LOGGER.fatal("ViaProxy is not able to run with less than 256MB of RAM.");
+            Logger.LOGGER.fatal("ViaProxyPlus is not able to run with less than 256MB of RAM.");
             if (hasUI) {
                 JOptionPane.showMessageDialog(null, "ViaProxyPlus is not able to run with less than 256MB of RAM.", "ViaProxyPlus", JOptionPane.ERROR_MESSAGE);
             }
             System.exit(1);
         } else if (Runtime.getRuntime().maxMemory() < 512 * 1024 * 1024) {
-            Logger.LOGGER.warn("ViaProxy has less than 512MB of RAM. This may cause issues with multiple clients connected.");
+            Logger.LOGGER.warn("ViaProxyPlus has less than 512MB of RAM. This may cause issues with multiple clients connected.");
             if (hasUI) {
                 JOptionPane.showMessageDialog(null, "ViaProxyPlus has less than 512MB of RAM. This may cause issues with multiple clients connected.", "ViaProxyPlus", JOptionPane.WARNING_MESSAGE);
             }

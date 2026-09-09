@@ -72,12 +72,12 @@ public class UpdateCheckTask implements Runnable {
                 Semver versionSemver = new Semver(VERSION);
                 Semver latestVersionSemver = new Semver(latestVersion);
                 updateAvailable = latestVersionSemver.isGreaterThan(versionSemver);
-                if (versionSemver.isGreaterThan(latestVersionSemver)) Logger.LOGGER.warn("You are running a dev version of ViaProxy");
+                if (versionSemver.isGreaterThan(latestVersionSemver)) Logger.LOGGER.warn("You are running a dev version of ViaProxyPlus");
             } catch (Throwable t) {
                 updateAvailable = !VERSION.equals(latestVersion);
             }
             if (updateAvailable) {
-                Logger.LOGGER.warn("You are running an outdated version of ViaProxy! Latest version: " + latestVersion);
+                Logger.LOGGER.warn("You are running an outdated version of ViaProxyPlus! Latest version: " + latestVersion);
                 if (this.hasUI && JarUtil.getJarFile().isPresent()) {
                     final boolean runsJava8 = System.getProperty("java.version").startsWith("1.8");
                     JsonArray assets = object.getAsJsonArray("assets");
@@ -111,12 +111,12 @@ public class UpdateCheckTask implements Runnable {
                     JarUtil.launch(f);
                     System.exit(0);
                 } catch (Throwable e) {
-                    Logger.LOGGER.error("Could not start the new ViaProxy jar", e);
+                    Logger.LOGGER.error("Could not start the new ViaProxyPlus jar", e);
                     ViaProxyWindow.showException(e);
                 }
             }), t -> {
                 if (t != null) {
-                    Logger.LOGGER.error("Could not download the latest version of ViaProxy", t);
+                    Logger.LOGGER.error("Could not download the latest version of ViaProxyPlus", t);
                     ViaProxyWindow.showException(t);
                 }
             });

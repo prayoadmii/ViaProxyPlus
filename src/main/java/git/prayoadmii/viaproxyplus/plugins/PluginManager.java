@@ -120,7 +120,7 @@ public class PluginManager {
         if (!yaml.containsKey("main")) throw new IllegalStateException("Plugin '" + file.getName() + "' does not have a main attribute in the viaproxy.yml");
         final Semver minVersion = new Semver(yaml.getOrDefault("min-version", "0.0.0").toString());
         if (!ViaProxy.VERSION.startsWith("${") && minVersion.isGreaterThan(ViaProxy.VERSION.replace("-SNAPSHOT", ""))) {
-            throw new IllegalStateException("Plugin '" + file.getName() + "' requires a newer version of ViaProxy (v" + minVersion + ")");
+            throw new IllegalStateException("Plugin '" + file.getName() + "' requires a newer version of ViaProxyPlus (v" + minVersion + ")");
         }
 
         final String main = (String) yaml.get("main");

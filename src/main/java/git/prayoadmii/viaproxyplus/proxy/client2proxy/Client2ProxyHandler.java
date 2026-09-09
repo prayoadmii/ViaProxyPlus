@@ -120,7 +120,7 @@ public class Client2ProxyHandler extends SimpleChannelInboundHandler<Packet> {
         this.proxyConnection.setC2pConnectionState(packet.intendedState.getConnectionState());
 
         if (!ProtocolVersion.isRegistered(clientVersion.getVersionType(), clientVersion.getOriginalVersion())) {
-            this.proxyConnection.kickClient("§cYour client version is not supported by ViaProxy!");
+            this.proxyConnection.kickClient("§cYour client version is not supported by ViaProxyPlus!");
         }
 
         final String[] handshakeParts;
@@ -197,7 +197,7 @@ public class Client2ProxyHandler extends SimpleChannelInboundHandler<Packet> {
             if (!ViaProxy.getConfig().getCustomMotd().isBlank()) {
                 this.proxyConnection.kickClient(ViaProxy.getConfig().getCustomMotd());
             }
-            this.proxyConnection.kickClient("§7ViaProxy is working!\n§7Connect to join the configured server");
+            this.proxyConnection.kickClient("§7ViaProxyPlus is working!\n§7Connect to join the configured server");
         }
 
         final UserOptions userOptions = new UserOptions(classicMpPass, ViaProxy.getConfig().getAccount());

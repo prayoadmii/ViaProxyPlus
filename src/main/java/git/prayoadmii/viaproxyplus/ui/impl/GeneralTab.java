@@ -318,7 +318,7 @@ public class GeneralTab extends UITab {
                     this.stateButton.setText(I18n.get("tab.general.state.stop"));
                 });
             } catch (Throwable e) {
-                Logger.LOGGER.error("Error while starting ViaProxy", e);
+                Logger.LOGGER.error("Error while starting ViaProxyPlus", e);
                 SwingUtilities.invokeLater(() -> {
                     this.setComponentsEnabled(true);
                     this.stateButton.setEnabled(true);

@@ -171,13 +171,13 @@ public class ViaProxy {
         Logger.setup();
         if (!useUI && !useConfig && !useCLI) {
             final String fileName = JarUtil.getJarFile().map(File::getName).orElse("ViaProxyPlus.jar");
-            Logger.LOGGER.info("Usage: java -jar " + fileName + " | Starts ViaProxy in graphical mode if available");
-            Logger.LOGGER.info("Usage: java -jar " + fileName + " config <config file> | Starts ViaProxy with the specified config file");
-            Logger.LOGGER.info("Usage: java -jar " + fileName + " cli --help | Starts ViaProxy in CLI mode");
+            Logger.LOGGER.info("Usage: java -jar " + fileName + " | Starts ViaProxyPlus in graphical mode if available");
+            Logger.LOGGER.info("Usage: java -jar " + fileName + " config <config file> | Starts ViaProxyPlus with the specified config file");
+            Logger.LOGGER.info("Usage: java -jar " + fileName + " cli --help | Starts ViaProxyPlus in CLI mode");
             System.exit(1);
         }
 
-        Logger.LOGGER.info("Initializing ViaProxy {} v{} ({}) (Injected using {})...", useUI ? "GUI" : "CLI", VERSION, IMPL_VERSION, injectionMethod);
+        Logger.LOGGER.info("Initializing ViaProxyPlus {} v{} ({}) (Injected using {})...", useUI ? "GUI" : "CLI", VERSION, IMPL_VERSION, injectionMethod);
         Logger.LOGGER.info("Using java version: " + System.getProperty("java.vm.name") + " " + System.getProperty("java.version") + " (" + System.getProperty("java.vendor") + ") on " + System.getProperty("os.name"));
         Logger.LOGGER.info("Available memory (bytes): " + Runtime.getRuntime().maxMemory());
         Logger.LOGGER.info("Working directory: " + CWD.getAbsolutePath());
@@ -209,7 +209,7 @@ public class ViaProxy {
             progressConsumer = text -> {
             };
         }
-        progressConsumer.accept("Initializing ViaProxy");
+        progressConsumer.accept("Initializing ViaProxyPlus");
 
         ConsoleHandler.hookConsole();
         ViaProxy.loadNetty();
@@ -263,7 +263,7 @@ public class ViaProxy {
                     throw new RuntimeException("Failed to load CLI arguments", e);
                 }
             } else if (firstStart) {
-                Logger.LOGGER.info("This is the first start of ViaProxy. Please configure the settings in the " + viaProxyConfigFile.getName() + " file and restart ViaProxy.");
+                Logger.LOGGER.info("This is the first start of ViaProxyPlus. Please configure the settings in the " + viaProxyConfigFile.getName() + " file and restart ViaProxyPlus.");
                 System.exit(0);
             }
 
@@ -304,7 +304,7 @@ public class ViaProxy {
 
             for (Channel channel : CLIENT_CHANNELS) {
                 try {
-                    ProxyConnection.fromChannel(channel).kickClient("§cViaProxy has been stopped");
+                    ProxyConnection.fromChannel(channel).kickClient("§cViaProxyPlus has been stopped");
                 } catch (Throwable ignored) {
                 }
             }

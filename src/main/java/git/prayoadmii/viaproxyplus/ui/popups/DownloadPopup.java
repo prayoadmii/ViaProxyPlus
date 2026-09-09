@@ -96,7 +96,7 @@ public class DownloadPopup extends JDialog {
             try {
                 HttpURLConnection con = (HttpURLConnection) URI.create(this.url).toURL().openConnection();
                 con.setRequestMethod("GET");
-                con.setRequestProperty("User-Agent", "Viaproxy/" + ViaProxy.VERSION);
+                con.setRequestProperty("User-Agent", "ViaProxyPlus/" + ViaProxy.VERSION);
                 con.setConnectTimeout(5000);
                 con.setReadTimeout(5000);
 

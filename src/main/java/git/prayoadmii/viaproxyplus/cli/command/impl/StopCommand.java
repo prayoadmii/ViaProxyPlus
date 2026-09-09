@@ -30,7 +30,7 @@ public class StopCommand extends Command {
     @Override
     public void register(final LiteralArgumentBuilder<CommandExecutor> builder) {
         builder.executes(context -> {
-            context.getSource().sendMessage("Stopping ViaProxy...");
+            context.getSource().sendMessage("Stopping ViaProxyPlus...");
             System.exit(0);
             return 1;
         });
