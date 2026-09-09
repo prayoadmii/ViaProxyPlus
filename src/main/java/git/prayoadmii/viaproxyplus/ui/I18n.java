@@ -17,81 +17,40 @@
  */
 package git.prayoadmii.viaproxyplus.ui;
 
-import net.raphimc.viabedrock.api.util.FileSystemUtil;
-import git.prayoadmii.viaproxyplus.ViaProxy;
-
-import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.Collection;
+import java.util.Properties;
 
 public class I18n {
 
     private static final String DEFAULT_LOCALE = "en_US";
-    private static Map<String, Properties> LOCALES = new LinkedHashMap<>();
-    private static String currentLocale;
+    private static final Properties ENGLISH_STRINGS = new Properties();
 
     static {
-        if (ViaProxy.getSaveManager() == null) {
-            throw new IllegalStateException("ViaProxy is not yet initialized");
-        }
-
-        try {
-            for (Map.Entry<Path, byte[]> entry : FileSystemUtil.getFilesInDirectory("assets/viaproxy/language").entrySet()) {
-                final Properties properties = new Properties();
-                properties.load(new InputStreamReader(new ByteArrayInputStream(entry.getValue()), StandardCharsets.UTF_8));
-                if (properties.isEmpty()) continue;
-                LOCALES.put(entry.getKey().getFileName().toString().replace(".properties", ""), properties);
+        try (InputStream inputStream = I18n.class.getClassLoader().getResourceAsStream("assets/viaproxy/language/en_US.properties")) {
+            if (inputStream == null) {
+                throw new IllegalStateException("English translation file not found");
             }
-        } catch (Throwable e) {
-            throw new RuntimeException("Failed to load translations", e);
-        }
-        LOCALES = LOCALES.entrySet().stream()
-                .sorted(Comparator.comparing(e -> e.getValue().getProperty("language.name")))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> newValue, LinkedHashMap::new));
-
-        currentLocale = ViaProxy.getSaveManager().uiSave.get("locale");
-        if (currentLocale == null || !LOCALES.containsKey(currentLocale)) {
-            final String systemLocale = Locale.getDefault().getLanguage() + '_' + Locale.getDefault().getCountry();
-            if (LOCALES.containsKey(systemLocale)) {
-                currentLocale = systemLocale;
-            } else {
-                for (Map.Entry<String, Properties> entry : LOCALES.entrySet()) {
-                    if (entry.getKey().startsWith(Locale.getDefault().getLanguage() + '_')) {
-                        currentLocale = entry.getKey();
-                        break;
-                    }
-                }
-            }
-        }
-
-        final int totalTranslation = LOCALES.get(DEFAULT_LOCALE).size();
-        for (Properties properties : LOCALES.values()) {
-            final int translated = properties.size();
-            final float percentage = (float) translated / totalTranslation * 100;
-            properties.put("language.completion", (int) Math.floor(percentage) + "%");
+            ENGLISH_STRINGS.load(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load English strings", e);
         }
     }
 
     public static String get(final String key) {
-        return getSpecific(currentLocale, key);
+        return getSpecific(DEFAULT_LOCALE, key);
     }
 
     public static String get(final String key, String... args) {
-        return String.format(getSpecific(currentLocale, key), (Object[]) args);
+        return String.format(getSpecific(DEFAULT_LOCALE, key), (Object[]) args);
     }
 
     public static String getSpecific(final String locale, final String key) {
-        Properties properties = LOCALES.get(locale);
-        if (properties == null) {
-            properties = LOCALES.get(DEFAULT_LOCALE);
-        }
-        String value = properties.getProperty(key);
-        if (value == null) {
-            value = LOCALES.get(DEFAULT_LOCALE).getProperty(key);
-        }
+        String value = ENGLISH_STRINGS.getProperty(key);
         if (value == null) {
             return "Missing translation for key: " + key;
         }
@@ -99,21 +58,15 @@ public class I18n {
     }
 
     public static String getCurrentLocale() {
-        return currentLocale;
+        return DEFAULT_LOCALE;
     }
 
     public static void setLocale(final String locale) {
-        if (ViaProxy.getSaveManager() == null) {
-            throw new IllegalStateException("ViaProxy is not yet initialized");
-        }
-
-        currentLocale = locale;
-        ViaProxy.getSaveManager().uiSave.put("locale", locale);
-        ViaProxy.getSaveManager().save();
+        // English-only build; locale switching is intentionally unavailable.
     }
 
     public static Collection<String> getAvailableLocales() {
-        return LOCALES.keySet();
+        return Collections.singleton(DEFAULT_LOCALE);
     }
 
 }

@@ -38,18 +38,19 @@ public class ConsoleHandler {
 
     private static void listen() {
         final CommandManager commandManager = new CommandManager();
-        final Scanner scanner = new Scanner(System.in);
-        try {
-            while (scanner.hasNextLine()) {
-                final String line = scanner.nextLine();
-                try {
-                    commandManager.execute(line);
-                } catch (Throwable e) {
-                    Logger.LOGGER.error("Error while handling console input", e);
+        try (Scanner scanner = new Scanner(System.in)) {
+            try {
+                while (scanner.hasNextLine()) {
+                    final String line = scanner.nextLine();
+                    try {
+                        commandManager.execute(line);
+                    } catch (Throwable e) {
+                        Logger.LOGGER.error("Error while handling console input", e);
+                    }
                 }
+            } catch (Throwable e) {
+                Logger.LOGGER.error("Error while reading console input", e);
             }
-        } catch (Throwable e) {
-            Logger.LOGGER.error("Error while reading console input", e);
         }
     }
 

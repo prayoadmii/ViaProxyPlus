@@ -26,7 +26,6 @@ import net.lenni0451.reflect.stream.RStream;
 import git.prayoadmii.viaproxyplus.ViaProxy;
 import git.prayoadmii.viaproxyplus.cli.command.executor.CommandExecutor;
 import git.prayoadmii.viaproxyplus.cli.command.executor.ConsoleCommandExecutor;
-import git.prayoadmii.viaproxyplus.cli.command.impl.*;
 import git.prayoadmii.viaproxyplus.plugins.events.ConsoleCommandEvent;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
 
@@ -43,17 +42,6 @@ public class CommandManager implements CommandBuilder<CommandExecutor> {
         }
     });
     private final List<Command> commands = new ArrayList<>();
-
-    // Core commands
-    private final HelpCommand HelpCommand = new HelpCommand(this);
-    private final StopCommand StopCommand = new StopCommand();
-    private final ViaVersionCommand ViaVersionCommand = new ViaVersionCommand();
-    private final UploadLogCommand UploadLogCommand = new UploadLogCommand();
-    private final AccountCommand AccountCommand = new AccountCommand();
-
-    // Debugging commands
-    private final GcCommand GcCommand = new GcCommand();
-    private final ThreadDumpCommand ThreadDumpCommand = new ThreadDumpCommand();
 
     public CommandManager() {
         RStream

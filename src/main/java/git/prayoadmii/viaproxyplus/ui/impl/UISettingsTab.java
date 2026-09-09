@@ -18,18 +18,11 @@
 package git.prayoadmii.viaproxyplus.ui.impl;
 
 import net.lenni0451.commons.swing.GBC;
-import git.prayoadmii.viaproxyplus.ui.I18n;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
-import git.prayoadmii.viaproxyplus.ui.elements.LinkLabel;
-import git.prayoadmii.viaproxyplus.util.JarUtil;
-import git.prayoadmii.viaproxyplus.util.logging.Logger;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static git.prayoadmii.viaproxyplus.ui.ViaProxyWindow.BODY_BLOCK_PADDING;
-import static git.prayoadmii.viaproxyplus.ui.ViaProxyWindow.BORDER_PADDING;
 
 public class UISettingsTab extends UITab {
 
@@ -42,40 +35,8 @@ public class UISettingsTab extends UITab {
         JPanel body = new JPanel();
         body.setLayout(new GridBagLayout());
 
-        int gridy = 0;
-        {
-            JLabel languageLabel = new JLabel(I18n.get("tab.ui_settings.language.label"));
-            GBC.create(body).grid(0, gridy++).insets(BORDER_PADDING, BORDER_PADDING, 0, BORDER_PADDING).anchor(GBC.NORTHWEST).add(languageLabel);
-
-            JComboBox<String> language = new JComboBox<>(I18n.getAvailableLocales().toArray(new String[0]));
-            language.setRenderer(new DefaultListCellRenderer() {
-                @Override
-                public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                    if (value instanceof String locale) {
-                        value = "<html><b>" + I18n.getSpecific(locale, "language.name") + "</b> (" + I18n.get("tab.ui_settings.language.completion", I18n.getSpecific(locale, "language.completion")) + ")</html>";
-                    }
-                    return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                }
-            });
-            language.setSelectedItem(I18n.getCurrentLocale());
-            language.addActionListener(event -> {
-                if (!(language.getSelectedItem() instanceof String locale)) return;
-                if (locale.equals(I18n.getCurrentLocale())) return;
-                I18n.setLocale(locale);
-                ViaProxyWindow.showInfo(I18n.get("tab.ui_settings.language.success", I18n.get("language.name"), locale));
-                try {
-                    JarUtil.launch(JarUtil.getJarFile().orElseThrow());
-                    System.exit(0);
-                } catch (Throwable e) {
-                    Logger.LOGGER.error("Could not start the ViaProxy jar", e);
-                    ViaProxyWindow.showException(e);
-                    System.exit(1);
-                }
-            });
-            GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(language);
-        }
-        GBC.create(body).grid(0, gridy++).weightx(1).insets(BODY_BLOCK_PADDING, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(new JLabel("<html>" + I18n.get("tab.ui_settings.crowdin.info") + "</html>"));
-        GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(new LinkLabel(I18n.get("tab.ui_settings.crowdin.link"), "https://crowdin.com/project/viaproxy"));
+        JLabel placeholder = new JLabel("English-only build");
+        GBC.create(body).grid(0, 0).insets(10, 10, 0, 10).anchor(GBC.NORTHWEST).add(placeholder);
 
         contentPane.setLayout(new BorderLayout());
         contentPane.add(body, BorderLayout.NORTH);
