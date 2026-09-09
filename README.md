@@ -12,8 +12,6 @@
 + Now ViaProxyPlus Window Will Open In 1280x720
 + Account Screen Now Allow You To Add Ely.By Account
 + "Proxy Online Mode" Now Let You Choose To Check Player With Mojang Or Ely.By
-- GUI Setting Are Removed
-- All Translations Are Removed Except English
 ```
 
 **And We Will Continue To Sync With Upstream Fork!**
