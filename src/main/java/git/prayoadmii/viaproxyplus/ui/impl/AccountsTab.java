@@ -27,8 +27,10 @@ import net.raphimc.viabedrock.protocol.data.ProtocolConstants;
 import git.prayoadmii.viaproxyplus.ViaProxy;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.BedrockAccount;
+import git.prayoadmii.viaproxyplus.saves.impl.accounts.ElyByAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.MicrosoftAccount;
 import git.prayoadmii.viaproxyplus.ui.I18n;
+import git.prayoadmii.viaproxyplus.util.ElyByAuthUtil;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.ui.popups.AddAccountPopup;
@@ -51,6 +53,7 @@ public class AccountsTab extends UITab {
     private JList<Account> accountsList;
     private JButton addMicrosoftAccountButton;
     private JButton addBedrockAccountButton;
+    private JButton addElyByAccountButton;
 
     private AddAccountPopup addAccountPopup;
     private Thread addThread;
@@ -160,7 +163,7 @@ public class AccountsTab extends UITab {
         }
         {
             final JPanel addButtons = new JPanel();
-            addButtons.setLayout(new GridLayout(1, 3, BORDER_PADDING, 0));
+            addButtons.setLayout(new GridLayout(1, 4, BORDER_PADDING, 0));
             {
                 JButton addOfflineAccountButton = new JButton(I18n.get("tab.accounts.add_offline.label"));
                 addOfflineAccountButton.addActionListener(event -> {
@@ -189,6 +192,14 @@ public class AccountsTab extends UITab {
                 });
                 addButtons.add(this.addBedrockAccountButton);
             }
+            {
+                this.addElyByAccountButton = new JButton("Add Ely.By");
+                this.addElyByAccountButton.addActionListener(event -> {
+                    this.addElyByAccountButton.setEnabled(false);
+                    this.handleElyByLogin();
+                });
+                addButtons.add(this.addElyByAccountButton);
+            }
 
             JPanel border = new JPanel();
             border.setLayout(new GridBagLayout());
@@ -215,6 +226,64 @@ public class AccountsTab extends UITab {
         }
         this.addMicrosoftAccountButton.setEnabled(true);
         this.addBedrockAccountButton.setEnabled(true);
+        this.addElyByAccountButton.setEnabled(true);
+    }
+
+    private void handleElyByLogin() {
+        this.addThread = new Thread(() -> {
+            try {
+                String username = JOptionPane.showInputDialog(this.viaProxyWindow, "Ely.by username or email:", "Add Ely.by Account", JOptionPane.PLAIN_MESSAGE);
+                if (username == null || username.trim().isEmpty()) {
+                    SwingUtilities.invokeLater(() -> {
+                        this.closePopup();
+                        this.addElyByAccountButton.setEnabled(true);
+                    });
+                    return;
+                }
+
+                JPasswordField passwordField = new JPasswordField(20);
+                int passwordOption = JOptionPane.showConfirmDialog(this.viaProxyWindow, passwordField, "Ely.by password:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if (passwordOption != JOptionPane.OK_OPTION || passwordField.getPassword().length == 0) {
+                    SwingUtilities.invokeLater(() -> {
+                        this.closePopup();
+                        this.addElyByAccountButton.setEnabled(true);
+                    });
+                    return;
+                }
+                String password = new String(passwordField.getPassword());
+
+                ElyByAccount account = null;
+                try {
+                    account = ElyByAuthUtil.authenticate(username, password, null);
+                } catch (ElyByAuthUtil.TwoFactorRequiredException e) {
+                    String twoFactorCode = JOptionPane.showInputDialog(this.viaProxyWindow, "Enter your Ely.by 2FA code:", "Ely.by 2FA", JOptionPane.PLAIN_MESSAGE);
+                    if (twoFactorCode == null || twoFactorCode.trim().isEmpty()) {
+                        SwingUtilities.invokeLater(() -> {
+                            this.closePopup();
+                            this.addElyByAccountButton.setEnabled(true);
+                        });
+                        return;
+                    }
+                    account = ElyByAuthUtil.authenticate(username, password, twoFactorCode);
+                }
+
+                final ElyByAccount finalAccount = account;
+                SwingUtilities.invokeLater(() -> {
+                    this.closePopup();
+                    ViaProxy.getSaveManager().accountsSave.addAccount(finalAccount);
+                    ViaProxy.getSaveManager().save();
+                    this.addAccount(finalAccount);
+                    ViaProxyWindow.showInfo("Ely.by account added: " + finalAccount.getName());
+                });
+            } catch (Throwable t) {
+                SwingUtilities.invokeLater(() -> {
+                    this.closePopup();
+                    ViaProxyWindow.showException(t);
+                });
+            }
+        }, "Add Ely.by Account Thread");
+        this.addThread.setDaemon(true);
+        this.addThread.start();
     }
 
     private void addAccount(final Account account) {

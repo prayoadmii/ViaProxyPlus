@@ -40,6 +40,7 @@ import git.prayoadmii.viaproxyplus.proxy.session.ProxyConnection;
 import git.prayoadmii.viaproxyplus.proxy.util.CloseAndReturn;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.BedrockAccount;
+import git.prayoadmii.viaproxyplus.saves.impl.accounts.ElyByAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.MicrosoftAccount;
 import git.prayoadmii.viaproxyplus.util.Proxy;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
@@ -122,6 +123,12 @@ public class ExternalInterface {
                     }
                 } catch (Throwable e) {
                     proxyConnection.kickClient("§cFailed to authenticate with Mojang servers! Please try again in a couple of seconds.");
+                }
+            } else if (proxyConnection.getUserOptions().account() instanceof ElyByAccount elyByAccount) {
+                try {
+                    AuthLibServices.SESSION_SERVICE.joinServer(elyByAccount.getUUID(), elyByAccount.getAccessToken(), serverIdHash);
+                } catch (Throwable e) {
+                    proxyConnection.kickClient("§cFailed to authenticate with Ely.by servers! Please try again in a couple of seconds.");
                 }
             } else if (!ViaProxy.EVENT_MANAGER.call(new JoinServerRequestEvent(proxyConnection, serverIdHash)).isCancelled()) {
                 proxyConnection.kickClient("§cThe configured target server is in online mode and requires a valid authentication mode.");

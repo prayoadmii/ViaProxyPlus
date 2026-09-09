@@ -38,6 +38,7 @@ import git.prayoadmii.viaproxyplus.plugins.events.ClientLoggedInEvent;
 import git.prayoadmii.viaproxyplus.plugins.events.ShouldVerifyOnlineModeEvent;
 import git.prayoadmii.viaproxyplus.proxy.LoginState;
 import git.prayoadmii.viaproxyplus.proxy.external_interface.AuthLibServices;
+import git.prayoadmii.viaproxyplus.proxy.external_interface.ElyByAuthLibServices;
 import git.prayoadmii.viaproxyplus.proxy.external_interface.ExternalInterface;
 import git.prayoadmii.viaproxyplus.proxy.session.ProxyConnection;
 import git.prayoadmii.viaproxyplus.proxy.util.ChannelUtil;
@@ -122,7 +123,12 @@ public class LoginPacketHandler extends PacketHandler {
                 final String userName = this.proxyConnection.getGameProfile().getName();
                 try {
                     final String serverHash = new BigInteger(CryptUtil.computeServerIdHash("", KEY_PAIR.getPublic(), secretKey)).toString(16);
-                    final ProfileResult profileResult = AuthLibServices.SESSION_SERVICE.hasJoinedServer(userName, serverHash, null);
+                    final ProfileResult profileResult;
+                    if (this.proxyConnection.getUserOptions().account() instanceof git.prayoadmii.viaproxyplus.saves.impl.accounts.ElyByAccount) {
+                        profileResult = ElyByAuthLibServices.SESSION_SERVICE.hasJoinedServer(userName, serverHash, null);
+                    } else {
+                        profileResult = AuthLibServices.SESSION_SERVICE.hasJoinedServer(userName, serverHash, null);
+                    }
                     if (profileResult == null) {
                         Logger.u_err("auth", this.proxyConnection, "Invalid session");
                         this.proxyConnection.kickClient("§cInvalid session! Please restart minecraft (and the launcher) and try again.");
