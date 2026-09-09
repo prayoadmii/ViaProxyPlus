@@ -9,11 +9,11 @@ publishing {
             pom {
                 name = "ViaProxyPlus"
                 description = "Standalone proxy which allows players to join EVERY Minecraft server version (Classic, Alpha, Beta, Release, Bedrock)"
-                url = "https://github.com/ViaVersion/ViaProxy"
+                url = "https://github.com/prayoadmii/ViaProxyPlus"
                 licenses {
                     license {
                         name = "GPL-3.0 License"
-                        url = "https://github.com/ViaVersion/ViaProxy/blob/main/LICENSE"
+                        url = "https://github.com/prayoadmii/ViaProxyPlus/blob/main/LICENSE"
                     }
                 }
                 developers {
@@ -22,9 +22,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = "scm:git:git://github.com/ViaVersion/ViaProxy.git"
-                    developerConnection = "scm:git:ssh://github.com/ViaVersion/ViaProxy.git"
-                    url = "https://github.com/ViaVersion/ViaProxy.git"
+                    connection = "scm:git:git://github.com/prayoadmii/ViaProxyPlus.git"
+                    developerConnection = "scm:git:ssh://github.com/prayoadmii/ViaProxyPlus.git"
+                    url = "https://github.com/prayoadmii/ViaProxyPlus.git"
                 }
             }
         }
