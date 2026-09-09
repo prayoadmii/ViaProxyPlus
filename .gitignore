@@ -9,12 +9,12 @@
 hs_err_pid*
 
 # Project files
-/.idea/*
-/.vscode/*
+bin/
+run/
+.vscode/
+.idea/*
 !/.idea/copyright/
-/.gradle/
-/buildSrc/.gradle/
+.gradle/
+buildSrc/.gradle/
 build/
 out/
-/run/
-/bin/*
