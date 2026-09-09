@@ -27,6 +27,7 @@ import git.prayoadmii.viaproxyplus.ui.I18n;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.ui.events.UICloseEvent;
+import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.appender.RollingRandomAccessFileAppender;
@@ -100,6 +101,26 @@ public class AdvancedTab extends UITab {
             this.proxyOnlineMode = new JCheckBox(I18n.get("tab.advanced.proxy_online_mode.label"));
             this.proxyOnlineMode.setToolTipText(I18n.get("tab.advanced.proxy_online_mode.tooltip"));
             this.proxyOnlineMode.setSelected(ViaProxy.getConfig().isProxyOnlineMode());
+            this.proxyOnlineMode.addActionListener(event -> {
+                if (!this.proxyOnlineMode.isSelected()) return;
+
+                final Object[] options = {"Mojang", "Ely.by", "Cancel"};
+                final int selected = JOptionPane.showOptionDialog(this.viaProxyWindow,
+                    "Choose the authentication service for clients connecting to the proxy:",
+                    "Proxy Online Mode",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+                if (selected == 0) {
+                    ViaProxy.getConfig().setProxyOnlineModeProvider(ViaProxyConfig.ProxyOnlineModeProvider.MOJANG);
+                } else if (selected == 1) {
+                    ViaProxy.getConfig().setProxyOnlineModeProvider(ViaProxyConfig.ProxyOnlineModeProvider.ELY_BY);
+                } else {
+                    this.proxyOnlineMode.setSelected(false);
+                }
+            });
             checkboxes.add(this.proxyOnlineMode);
         }
         {

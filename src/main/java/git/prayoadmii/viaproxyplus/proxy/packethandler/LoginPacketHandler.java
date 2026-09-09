@@ -39,6 +39,7 @@ import git.prayoadmii.viaproxyplus.plugins.events.ShouldVerifyOnlineModeEvent;
 import git.prayoadmii.viaproxyplus.proxy.LoginState;
 import git.prayoadmii.viaproxyplus.proxy.external_interface.AuthLibServices;
 import git.prayoadmii.viaproxyplus.proxy.external_interface.ElyByAuthLibServices;
+import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import git.prayoadmii.viaproxyplus.proxy.external_interface.ExternalInterface;
 import git.prayoadmii.viaproxyplus.proxy.session.ProxyConnection;
 import git.prayoadmii.viaproxyplus.proxy.util.ChannelUtil;
@@ -124,7 +125,7 @@ public class LoginPacketHandler extends PacketHandler {
                 try {
                     final String serverHash = new BigInteger(CryptUtil.computeServerIdHash("", KEY_PAIR.getPublic(), secretKey)).toString(16);
                     final ProfileResult profileResult;
-                    if (this.proxyConnection.getUserOptions().account() instanceof git.prayoadmii.viaproxyplus.saves.impl.accounts.ElyByAccount) {
+                    if (ViaProxy.getConfig().getProxyOnlineModeProvider() == ViaProxyConfig.ProxyOnlineModeProvider.ELY_BY) {
                         profileResult = ElyByAuthLibServices.SESSION_SERVICE.hasJoinedServer(userName, serverHash, null);
                     } else {
                         profileResult = AuthLibServices.SESSION_SERVICE.hasJoinedServer(userName, serverHash, null);

@@ -80,6 +80,10 @@ public class ViaProxyConfig {
     })
     private boolean proxyOnlineMode = false;
 
+    @Option("proxy-online-mode-provider")
+    @Description("The authentication service used to verify clients connecting to Proxy Online Mode.")
+    private ProxyOnlineModeProvider proxyOnlineModeProvider = ProxyOnlineModeProvider.MOJANG;
+
     @Option("auth-method")
     @Description({
             "The authentication method to use for joining the target server.",
@@ -356,6 +360,15 @@ public class ViaProxyConfig {
         this.save();
     }
 
+    public ProxyOnlineModeProvider getProxyOnlineModeProvider() {
+        return this.proxyOnlineModeProvider;
+    }
+
+    public void setProxyOnlineModeProvider(final ProxyOnlineModeProvider proxyOnlineModeProvider) {
+        this.proxyOnlineModeProvider = proxyOnlineModeProvider;
+        this.save();
+    }
+
     public AuthMethod getAuthMethod() {
         return this.authMethod;
     }
@@ -615,6 +628,13 @@ public class ViaProxyConfig {
         public String getGuiTranslationKey() {
             return this.guiTranslationKey;
         }
+
+    }
+
+    public enum ProxyOnlineModeProvider {
+
+        MOJANG,
+        ELY_BY
 
     }
 
