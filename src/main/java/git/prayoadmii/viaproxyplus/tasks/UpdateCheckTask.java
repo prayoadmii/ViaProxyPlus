@@ -33,6 +33,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 import static git.prayoadmii.viaproxyplus.ViaProxy.VERSION;
@@ -50,7 +51,7 @@ public class UpdateCheckTask implements Runnable {
     public void run() {
         if (VERSION.startsWith("$")) return; // Dev env check
         try {
-            URL url = new URL("https://api.github.com/repos/RaphiMC/ViaProxy/releases/latest");
+            URL url = URI.create("https://api.github.com/repos/RaphiMC/ViaProxy/releases/latest").toURL();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "ViaProxyPlus/" + VERSION);

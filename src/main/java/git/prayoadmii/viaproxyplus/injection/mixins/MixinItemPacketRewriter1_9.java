@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 @Mixin(value = ItemPacketRewriter1_9.class, remap = false)
 public abstract class MixinItemPacketRewriter1_9 extends ItemRewriter<ClientboundPackets1_8, ServerboundPackets1_9, Protocol1_8To1_9> {
 

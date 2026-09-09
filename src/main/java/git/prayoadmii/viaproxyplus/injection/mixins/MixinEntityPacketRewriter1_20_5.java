@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.UUID;
 
+@SuppressWarnings("deprecation")
 @Mixin(value = EntityPacketRewriter1_20_5.class, remap = false)
 public abstract class MixinEntityPacketRewriter1_20_5 {
 

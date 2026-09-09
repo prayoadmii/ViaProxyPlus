@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
+@SuppressWarnings("deprecation")
 @Mixin(value = EntityTracker1_9.class, remap = false)
 public abstract class MixinEntityTracker1_9 {
 

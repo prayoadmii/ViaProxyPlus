@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+@SuppressWarnings("deprecation")
 @Mixin(value = BlockItemPacketRewriter1_21_4.class, remap = false)
 public abstract class MixinBlockItemPacketRewriter1_21_4 {
 

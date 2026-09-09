@@ -18,7 +18,6 @@
 package git.prayoadmii.viaproxyplus.saves.impl.accounts;
 
 import com.google.gson.JsonObject;
-import git.prayoadmii.viaproxyplus.ViaProxy;
 
 import java.util.UUID;
 

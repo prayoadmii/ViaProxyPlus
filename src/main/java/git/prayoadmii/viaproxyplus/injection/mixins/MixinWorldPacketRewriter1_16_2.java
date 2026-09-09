@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
+@SuppressWarnings("deprecation")
 @Mixin(value = WorldPacketRewriter1_16_2.class, remap = false)
 public abstract class MixinWorldPacketRewriter1_16_2 {
 

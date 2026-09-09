@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.function.Consumer;
@@ -94,7 +94,7 @@ public class DownloadPopup extends JDialog {
     private void start() {
         this.downloadThread = new Thread(() -> {
             try {
-                HttpURLConnection con = (HttpURLConnection) new URL(this.url).openConnection();
+                HttpURLConnection con = (HttpURLConnection) URI.create(this.url).toURL().openConnection();
                 con.setRequestMethod("GET");
                 con.setRequestProperty("User-Agent", "Viaproxy/" + ViaProxy.VERSION);
                 con.setConnectTimeout(5000);
