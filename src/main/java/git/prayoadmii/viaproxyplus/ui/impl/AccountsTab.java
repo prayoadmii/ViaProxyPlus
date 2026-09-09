@@ -193,7 +193,7 @@ public class AccountsTab extends UITab {
                 addButtons.add(this.addBedrockAccountButton);
             }
             {
-                this.addElyByAccountButton = new JButton("Add Ely.By");
+                this.addElyByAccountButton = new JButton(I18n.get("tab.accounts.add_elyby.label"));
                 this.addElyByAccountButton.addActionListener(event -> {
                     this.addElyByAccountButton.setEnabled(false);
                     this.handleElyByLogin();
@@ -232,7 +232,7 @@ public class AccountsTab extends UITab {
     private void handleElyByLogin() {
         this.addThread = new Thread(() -> {
             try {
-                String username = JOptionPane.showInputDialog(this.viaProxyWindow, "Ely.by username or email:", "Add Ely.by Account", JOptionPane.PLAIN_MESSAGE);
+                String username = JOptionPane.showInputDialog(this.viaProxyWindow, I18n.get("tab.accounts.add_elyby.username"), I18n.get("tab.accounts.add_elyby.title"), JOptionPane.PLAIN_MESSAGE);
                 if (username == null || username.trim().isEmpty()) {
                     SwingUtilities.invokeLater(() -> {
                         this.closePopup();
@@ -242,7 +242,7 @@ public class AccountsTab extends UITab {
                 }
 
                 JPasswordField passwordField = new JPasswordField(20);
-                int passwordOption = JOptionPane.showConfirmDialog(this.viaProxyWindow, passwordField, "Ely.by password:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                int passwordOption = JOptionPane.showConfirmDialog(this.viaProxyWindow, passwordField, I18n.get("tab.accounts.add_elyby.password"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                 if (passwordOption != JOptionPane.OK_OPTION || passwordField.getPassword().length == 0) {
                     SwingUtilities.invokeLater(() -> {
                         this.closePopup();
@@ -256,7 +256,7 @@ public class AccountsTab extends UITab {
                 try {
                     account = ElyByAuthUtil.authenticate(username, password, null);
                 } catch (ElyByAuthUtil.TwoFactorRequiredException e) {
-                    String twoFactorCode = JOptionPane.showInputDialog(this.viaProxyWindow, "Enter your Ely.by 2FA code:", "Ely.by 2FA", JOptionPane.PLAIN_MESSAGE);
+                    String twoFactorCode = JOptionPane.showInputDialog(this.viaProxyWindow, I18n.get("tab.accounts.add_elyby.two_factor"), I18n.get("tab.accounts.add_elyby.two_factor_title"), JOptionPane.PLAIN_MESSAGE);
                     if (twoFactorCode == null || twoFactorCode.trim().isEmpty()) {
                         SwingUtilities.invokeLater(() -> {
                             this.closePopup();
@@ -273,7 +273,7 @@ public class AccountsTab extends UITab {
                     ViaProxy.getSaveManager().accountsSave.addAccount(finalAccount);
                     ViaProxy.getSaveManager().save();
                     this.addAccount(finalAccount);
-                    ViaProxyWindow.showInfo("Ely.by account added: " + finalAccount.getName());
+                    ViaProxyWindow.showInfo(I18n.get("tab.accounts.add_elyby.success", finalAccount.getName()));
                 });
             } catch (Throwable t) {
                 SwingUtilities.invokeLater(() -> {
