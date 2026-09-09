@@ -117,6 +117,10 @@ application {
     mainClass = "net.raphimc.viaproxy.ViaProxy"
 }
 
+tasks.withType(JavaExec).configureEach {
+    workingDir = file("run")
+}
+
 jar {
     manifest {
         attributes(

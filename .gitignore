@@ -10,6 +10,7 @@ hs_err_pid*
 
 # Project files
 /.idea/*
+/.vscode/*
 !/.idea/copyright/
 /.gradle/
 /buildSrc/.gradle/
