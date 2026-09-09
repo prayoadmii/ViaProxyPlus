@@ -99,7 +99,7 @@ public class ViaProxyWindow extends JFrame {
                 ViaProxy.getSaveManager().save();
             }
         });
-        this.setSize(500, 380);
+        this.setSize(1280, 720);
         this.setMinimumSize(this.getSize());
         this.setLocationRelativeTo(null);
         this.setContentPane(this.contentPane);
