@@ -114,7 +114,7 @@ dependencies {
 }
 
 application {
-    mainClass = "net.raphimc.viaproxy.ViaProxy"
+    mainClass = "git.prayoadmii.viaproxyplus.ViaProxy"
 }
 
 tasks.withType(JavaExec).configureEach {
