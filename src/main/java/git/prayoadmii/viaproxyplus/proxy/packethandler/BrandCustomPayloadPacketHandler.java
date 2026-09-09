@@ -54,7 +54,7 @@ public class BrandCustomPayloadPacketHandler extends PacketHandler {
                         brand = "Unknown";
                     }
                 }
-                final String newBrand = "ViaProxy (" + this.proxyConnection.getClientVersion().getName() + ") -> " + brand + " §r(" + this.proxyConnection.getServerVersion().getName() + ")";
+                final String newBrand = "ViaProxyPlus (" + this.proxyConnection.getClientVersion().getName() + ") -> " + brand + " §r(" + this.proxyConnection.getServerVersion().getName() + ")";
 
                 final ByteBuf newData = Unpooled.buffer();
                 PacketTypes.writeString(newData, newBrand);

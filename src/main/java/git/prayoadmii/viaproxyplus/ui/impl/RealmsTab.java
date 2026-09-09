@@ -233,7 +233,7 @@ public class RealmsTab extends UITab {
                         join.setEnabled(true);
                         join.setText(I18n.get("tab.realms.join"));
                         if (realmsService instanceof JavaRealmsService javaRealmsService && cause instanceof RealmsRequestException realmsRequestException && realmsRequestException.getErrorCode() == RealmsRequestException.ERROR_TOS_NOT_ACCEPTED) {
-                            final int chosen = JOptionPane.showConfirmDialog(this.viaProxyWindow, I18n.get("tab.realms.accept_tos", "https://aka.ms/MinecraftRealmsTerms"), "ViaProxy", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            final int chosen = JOptionPane.showConfirmDialog(this.viaProxyWindow, I18n.get("tab.realms.accept_tos", "https://aka.ms/MinecraftRealmsTerms"), "ViaProxyPlus", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                             if (chosen == JOptionPane.YES_OPTION) {
                                 javaRealmsService.acceptTosUnchecked();
                                 join.doClick(0);

@@ -24,7 +24,7 @@ import git.prayoadmii.viaproxyplus.cli.command.executor.CommandExecutor;
 public class StopCommand extends Command {
 
     public StopCommand() {
-        super("stop", "Stop ViaProxy", "stop", "exit", "end");
+        super("stop", "Stop ViaProxyPlus", "stop", "exit", "end");
     }
 
     @Override

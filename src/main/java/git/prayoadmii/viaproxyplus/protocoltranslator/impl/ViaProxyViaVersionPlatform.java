@@ -48,7 +48,7 @@ public class ViaProxyViaVersionPlatform extends UserConnectionViaVersionPlatform
 
     @Override
     public String getPlatformName() {
-        return "ViaProxy";
+        return "ViaProxyPlus";
     }
 
     @Override

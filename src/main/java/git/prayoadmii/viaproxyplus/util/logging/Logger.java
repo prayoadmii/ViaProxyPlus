@@ -35,7 +35,7 @@ public class Logger {
         PluginManager.addPackage("git.prayoadmii.viaproxyplus.util.logging");
     }
 
-    public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger("ViaProxy");
+    public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger("ViaProxyPlus");
 
     public static final PrintStream SYSOUT = System.out;
     public static final PrintStream SYSERR = System.err;

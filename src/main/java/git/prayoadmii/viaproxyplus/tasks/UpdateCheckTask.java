@@ -53,7 +53,7 @@ public class UpdateCheckTask implements Runnable {
             URL url = new URL("https://api.github.com/repos/RaphiMC/ViaProxy/releases/latest");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "ViaProxy/" + VERSION);
+            con.setRequestProperty("User-Agent", "ViaProxyPlus/" + VERSION);
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
 
@@ -97,15 +97,15 @@ public class UpdateCheckTask implements Runnable {
     }
 
     private void showUpdateWarning(final String latestVersion) {
-        JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.info", VERSION, latestVersion), "ViaProxy", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.info", VERSION, latestVersion), "ViaProxyPlus", JOptionPane.WARNING_MESSAGE);
     }
 
     private void showUpdateQuestion(final String name, final String downloadUrl, final String latestVersion) {
-        int chosen = JOptionPane.showConfirmDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.info", VERSION, latestVersion) + "\n\n" + I18n.get("popup.update.question"), "ViaProxy", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int chosen = JOptionPane.showConfirmDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.info", VERSION, latestVersion) + "\n\n" + I18n.get("popup.update.question"), "ViaProxyPlus", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (chosen == JOptionPane.YES_OPTION) {
             final File f = new File(JarUtil.getJarFile().map(File::getParentFile).orElseThrow(), name);
             new DownloadPopup(ViaProxy.getForegroundWindow(), downloadUrl, f, () -> SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.success"), "ViaProxy", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.success"), "ViaProxyPlus", JOptionPane.INFORMATION_MESSAGE);
                 try {
                     JarUtil.launch(f);
                     System.exit(0);

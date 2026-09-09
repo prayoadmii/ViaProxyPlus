@@ -76,7 +76,7 @@ import java.util.function.Consumer;
 public class ViaProxy {
 
     public static final String VERSION = "${version}";
-    public static final String IMPL_VERSION = "git-ViaProxy-${version}:${commit_hash}";
+    public static final String IMPL_VERSION = "git-ViaProxyPlus-${version}:${commit_hash}";
 
     public static final LambdaManager EVENT_MANAGER = LambdaManager.threadSafe(new LambdaMetaFactoryGenerator(JavaBypass.TRUSTED_LOOKUP));
     private static /*final*/ File CWD;
@@ -157,7 +157,7 @@ public class ViaProxy {
         if (CWD != null) {
             System.setProperty("user.dir", CWD.getAbsolutePath());
         } else if (useUI) {
-            JOptionPane.showMessageDialog(null, "Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.", "ViaProxy", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.", "ViaProxyPlus", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } else {
             System.err.println("Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.");
@@ -170,7 +170,7 @@ public class ViaProxy {
 
         Logger.setup();
         if (!useUI && !useConfig && !useCLI) {
-            final String fileName = JarUtil.getJarFile().map(File::getName).orElse("ViaProxy.jar");
+            final String fileName = JarUtil.getJarFile().map(File::getName).orElse("ViaProxyPlus.jar");
             Logger.LOGGER.info("Usage: java -jar " + fileName + " | Starts ViaProxy in graphical mode if available");
             Logger.LOGGER.info("Usage: java -jar " + fileName + " config <config file> | Starts ViaProxy with the specified config file");
             Logger.LOGGER.info("Usage: java -jar " + fileName + " cli --help | Starts ViaProxy in CLI mode");
@@ -252,7 +252,7 @@ public class ViaProxy {
                 CompletableFuture.runAsync(new UpdateCheckTask(true));
             }
             EVENT_MANAGER.call(new ViaProxyLoadedEvent());
-            Logger.LOGGER.info("ViaProxy started successfully!");
+            Logger.LOGGER.info("ViaProxyPlus started successfully!");
         } else {
             if (useCLI) {
                 final String[] cliArgs = new String[args.length - 1];
@@ -271,7 +271,7 @@ public class ViaProxy {
                 CompletableFuture.runAsync(new UpdateCheckTask(false));
             }
             EVENT_MANAGER.call(new ViaProxyLoadedEvent());
-            Logger.LOGGER.info("ViaProxy started successfully!");
+            Logger.LOGGER.info("ViaProxyPlus started successfully!");
             ViaProxy.startProxy();
 
             Thread.sleep(Integer.MAX_VALUE);

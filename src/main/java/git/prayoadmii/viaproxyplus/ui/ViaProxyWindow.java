@@ -87,7 +87,7 @@ public class ViaProxyWindow extends JFrame {
     }
 
     private void initWindow() {
-        this.setTitle("ViaProxy v" + ViaProxy.VERSION);
+        this.setTitle("ViaProxyPlus v" + ViaProxy.VERSION);
         this.setIconImage(this.icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
@@ -154,7 +154,7 @@ public class ViaProxyWindow extends JFrame {
     }
 
     public static void showNotification(final String message, final int type) {
-        JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), message, "ViaProxy", type);
+        JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), message, "ViaProxyPlus", type);
     }
 
 }

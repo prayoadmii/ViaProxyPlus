@@ -7,7 +7,7 @@ publishing {
     publications {
         mavenJava {
             pom {
-                name = "ViaProxy"
+                name = "ViaProxyPlus"
                 description = "Standalone proxy which allows players to join EVERY Minecraft server version (Classic, Alpha, Beta, Release, Bedrock)"
                 url = "https://github.com/ViaVersion/ViaProxy"
                 licenses {

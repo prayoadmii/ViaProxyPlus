@@ -12,5 +12,5 @@ sourceSets.configureEach {
 Provider<String> latestCommitHash() {
     return providers.exec {
         commandLine = ["git", "rev-parse", "--short", "HEAD"]
-    }.standardOutput.getAsText().map(String::trim)
+    }.standardOutput.getAsText().map { it.trim() }
 }

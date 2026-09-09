@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 public class UploadLogCommand extends Command {
 
     public UploadLogCommand() {
-        super("uploadlog", "Upload the ViaProxy log", "uploadlog");
+        super("uploadlog", "Upload the ViaProxyPlus log", "uploadlog");
     }
 
     @Override
@@ -46,7 +46,7 @@ public class UploadLogCommand extends Command {
             final File logFile = new File(fileAppender.getFileName());
 
             try {
-                final MclogsClient mclogsClient = new MclogsClient("ViaProxy", ViaProxy.VERSION);
+                final MclogsClient mclogsClient = new MclogsClient("ViaProxyPlus", ViaProxy.VERSION);
                 final UploadLogResponse apiResponse = mclogsClient.uploadLog(logFile.toPath()).get();
                 context.getSource().sendMessage("Uploaded log file to " + apiResponse.getUrl());
             } catch (ExecutionException e) {

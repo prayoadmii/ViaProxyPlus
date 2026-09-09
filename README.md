@@ -1,4 +1,4 @@
-# **ViaProxy+**
+# **ViaProxyPlus**
 
 *You Can Read Original README At [Official ViaProxy Repo](https://github.com/ViaVersion/ViaProxy)*
 
