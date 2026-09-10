@@ -29,12 +29,6 @@ public final class SoundManager {
         play("done.mp3");
     }
 
-    public static void installComboBoxSound(final JComboBox<?> comboBox) {
-        comboBox.addActionListener(event -> {
-            if (comboBox.isEnabled()) playClick();
-        });
-    }
-
     private static void play(final String sound) {
         final InputStream stream = SoundManager.class.getClassLoader().getResourceAsStream(SOUND_PATH + sound);
         if (stream == null) return;

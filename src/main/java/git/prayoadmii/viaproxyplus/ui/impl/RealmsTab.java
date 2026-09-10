@@ -188,7 +188,6 @@ public class RealmsTab extends UITab {
                     this.reinit();
                 }
             });
-            SoundManager.installComboBoxSound(type);
             GBC.create(parent).grid(1, 0).insets(5, 0, 5, 5).anchor(GBC.LINE_END).add(type);
         }
     }

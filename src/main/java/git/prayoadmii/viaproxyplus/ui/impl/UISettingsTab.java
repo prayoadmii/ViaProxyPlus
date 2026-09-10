@@ -73,7 +73,6 @@ public class UISettingsTab extends UITab {
                     System.exit(1);
                 }
             });
-            SoundManager.installComboBoxSound(language);
             GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(language);
         }
         GBC.create(body).grid(0, gridy++).weightx(1).insets(BODY_BLOCK_PADDING, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(new JLabel("<html>" + I18n.get("tab.ui_settings.translate.info") + "</html>"));
