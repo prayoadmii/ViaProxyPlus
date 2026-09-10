@@ -53,6 +53,7 @@ public class ViaProxyWindow extends JFrame {
     public final RealmsTab realmsTab = new RealmsTab(this);
     public final UISettingsTab uiSettingsTab = new UISettingsTab(this);
     public final PluginsTab pluginsTab = new PluginsTab(this);
+    public final ConnectedPlayersTab connectedPlayersTab = new ConnectedPlayersTab(this);
 
     private ImageIcon icon;
 
