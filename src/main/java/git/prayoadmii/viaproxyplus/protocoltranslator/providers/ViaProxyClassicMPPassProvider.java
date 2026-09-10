@@ -34,7 +34,6 @@ import java.util.logging.Level;
 
 public class ViaProxyClassicMPPassProvider extends ClassicMpPassProvider {
 
-    @SuppressWarnings("deprecation")
     @Override
     public String getMpPass(UserConnection user) {
         final String mppass = ProxyConnection.fromUserConnection(user).getUserOptions().classicMpPass();

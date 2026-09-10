@@ -48,7 +48,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.*;
 
-@SuppressWarnings("deprecation")
 @Mixin(value = BlockItemPacketRewriter1_20_5.class, remap = false)
 public abstract class MixinBlockItemPacketRewriter1_20_5 extends ItemRewriter<ClientboundPacket1_20_3, ServerboundPacket1_20_5, Protocol1_20_3To1_20_5> {
 

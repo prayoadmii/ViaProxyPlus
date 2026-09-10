@@ -29,7 +29,6 @@ import java.io.PrintStream;
 import java.net.SocketAddress;
 import java.util.Locale;
 
-@SuppressWarnings("deprecation")
 public class Logger {
 
     static {

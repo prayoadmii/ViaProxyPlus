@@ -31,7 +31,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 
-@SuppressWarnings("deprecation")
 @Mixin(Protocol1_18To1_18_2.class)
 public abstract class MixinProtocol1_18To1_18_2 extends AbstractProtocol<ClientboundPackets1_18, ClientboundPackets1_18, ServerboundPackets1_17, ServerboundPackets1_17> {
 
