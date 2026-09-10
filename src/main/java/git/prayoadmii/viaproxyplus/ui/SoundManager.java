@@ -11,6 +11,7 @@ package git.prayoadmii.viaproxyplus.ui;
 
 import javazoom.jl.player.Player;
 
+import javax.swing.JComboBox;
 import java.io.InputStream;
 
 public final class SoundManager {
@@ -26,6 +27,12 @@ public final class SoundManager {
 
     public static void playDone() {
         play("done.mp3");
+    }
+
+    public static void installComboBoxSound(final JComboBox<?> comboBox) {
+        comboBox.addActionListener(event -> {
+            if (comboBox.isEnabled()) playClick();
+        });
     }
 
     private static void play(final String sound) {

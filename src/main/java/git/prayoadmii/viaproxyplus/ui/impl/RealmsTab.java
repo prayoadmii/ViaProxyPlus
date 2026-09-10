@@ -36,6 +36,7 @@ import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.BedrockAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.MicrosoftAccount;
 import git.prayoadmii.viaproxyplus.ui.I18n;
+import git.prayoadmii.viaproxyplus.ui.SoundManager;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
@@ -187,6 +188,7 @@ public class RealmsTab extends UITab {
                     this.reinit();
                 }
             });
+            SoundManager.installComboBoxSound(type);
             GBC.create(parent).grid(1, 0).insets(5, 0, 5, 5).anchor(GBC.LINE_END).add(type);
         }
     }

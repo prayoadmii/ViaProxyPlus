@@ -19,6 +19,7 @@ package git.prayoadmii.viaproxyplus.ui.impl;
 
 import net.lenni0451.commons.swing.GBC;
 import git.prayoadmii.viaproxyplus.ui.I18n;
+import git.prayoadmii.viaproxyplus.ui.SoundManager;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.ui.elements.LinkLabel;
@@ -72,6 +73,7 @@ public class UISettingsTab extends UITab {
                     System.exit(1);
                 }
             });
+            SoundManager.installComboBoxSound(language);
             GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(language);
         }
         GBC.create(body).grid(0, gridy++).weightx(1).insets(BODY_BLOCK_PADDING, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(new JLabel("<html>" + I18n.get("tab.ui_settings.translate.info") + "</html>"));

@@ -132,7 +132,24 @@ public class ViaProxyWindow extends JFrame {
                     && button.isEnabled()) {
                 SoundManager.playClick();
             }
-        }, AWTEvent.MOUSE_EVENT_MASK);
+            if (event instanceof java.awt.event.MouseEvent mouseEvent
+                    && mouseEvent.getID() == java.awt.event.MouseEvent.MOUSE_PRESSED
+                    && mouseEvent.getSource() instanceof JComboBox<?> comboBox
+                    && comboBox.isEnabled()) {
+                SoundManager.playClick();
+            }
+            if (event instanceof java.awt.event.ActionEvent actionEvent
+                    && actionEvent.getSource() instanceof JComboBox<?> comboBox
+                    && comboBox.isEnabled()) {
+                SoundManager.playClick();
+            }
+            if (event instanceof java.awt.event.ItemEvent itemEvent
+                    && itemEvent.getSource() instanceof JComboBox<?> comboBox
+                    && itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED
+                    && comboBox.isEnabled()) {
+                SoundManager.playClick();
+            }
+        }, AWTEvent.MOUSE_EVENT_MASK | AWTEvent.ACTION_EVENT_MASK | AWTEvent.ITEM_EVENT_MASK);
     }
 
     public static void openURL(final String url) {
