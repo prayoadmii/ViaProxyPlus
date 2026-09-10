@@ -120,7 +120,14 @@ public class ViaProxyWindow extends JFrame {
         this.contentPane.addChangeListener(e -> {
             int selectedIndex = contentPane.getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < ViaProxyWindow.this.tabs.size()) ViaProxyWindow.this.tabs.get(selectedIndex).onTabOpened();
-            SoundManager.playClick();
+        });
+        this.contentPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent event) {
+                if (ViaProxyWindow.this.contentPane.indexAtLocation(event.getX(), event.getY()) >= 0) {
+                    SoundManager.playClick();
+                }
+            }
         });
     }
 
@@ -138,18 +145,7 @@ public class ViaProxyWindow extends JFrame {
                     && comboBox.isEnabled()) {
                 SoundManager.playClick();
             }
-            if (event instanceof java.awt.event.ActionEvent actionEvent
-                    && actionEvent.getSource() instanceof JComboBox<?> comboBox
-                    && comboBox.isEnabled()) {
-                SoundManager.playClick();
-            }
-            if (event instanceof java.awt.event.ItemEvent itemEvent
-                    && itemEvent.getSource() instanceof JComboBox<?> comboBox
-                    && itemEvent.getStateChange() == java.awt.event.ItemEvent.SELECTED
-                    && comboBox.isEnabled()) {
-                SoundManager.playClick();
-            }
-        }, AWTEvent.MOUSE_EVENT_MASK | AWTEvent.ACTION_EVENT_MASK | AWTEvent.ITEM_EVENT_MASK);
+        }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
     public static void openURL(final String url) {

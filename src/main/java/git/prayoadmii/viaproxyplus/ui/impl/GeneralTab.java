@@ -132,7 +132,6 @@ public class GeneralTab extends UITab {
                 }
             });
             this.serverVersion.setSelectedItem(ViaProxy.getConfig().getTargetVersion());
-            SoundManager.installComboBoxSound(this.serverVersion);
             GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(this.serverVersion);
         }
         {
@@ -163,6 +162,7 @@ public class GeneralTab extends UITab {
             for (ActionListener listener : this.serverVersion.getActionListeners()) {
                 listener.actionPerformed(fakeAction);
             }
+            SoundManager.installComboBoxSound(this.serverVersion);
         }
 
         parent.add(body, BorderLayout.CENTER);
