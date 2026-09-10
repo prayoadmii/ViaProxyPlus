@@ -33,6 +33,6 @@
 
 ---
 
-# **Credits and License**
+# **Credits And License**
 
 **This Project Was Built/Fork From [ViaProxy](https://github.com/ViaVersion/ViaProxy) By RK_01/RaphiMC With All Contributors This Repo Always Up-To-Date With Upstream This Project License Under GPLv3**
