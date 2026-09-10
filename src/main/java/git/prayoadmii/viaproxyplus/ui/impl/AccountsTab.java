@@ -39,10 +39,14 @@ import git.prayoadmii.viaproxyplus.util.TFunction;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 
@@ -95,6 +99,9 @@ public class AccountsTab extends UITab {
                     }
                 }
             });
+            this.accountsList.setDragEnabled(true);
+            this.accountsList.setDropMode(DropMode.INSERT);
+            this.accountsList.setTransferHandler(new AccountTransferHandler());
             this.accountsList.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -310,31 +317,77 @@ public class AccountsTab extends UITab {
     }
 
     private void moveUp(final int index) {
-        DefaultListModel<Account> model = (DefaultListModel<Account>) this.accountsList.getModel();
-        if (model.getSize() == 0) return;
-        if (index == 0) return;
-
-        Account account = model.remove(index);
-        model.add(index - 1, account);
-        this.accountsList.setSelectedIndex(index - 1);
-
-        ViaProxy.getSaveManager().accountsSave.removeAccount(account);
-        ViaProxy.getSaveManager().accountsSave.addAccount(index - 1, account);
-        ViaProxy.getSaveManager().save();
+        this.moveAccount(index, index - 1);
     }
 
     private void moveDown(final int index) {
-        DefaultListModel<Account> model = (DefaultListModel<Account>) this.accountsList.getModel();
-        if (model.getSize() == 0) return;
-        if (index == model.getSize() - 1) return;
+        this.moveAccount(index, index + 1);
+    }
 
-        Account account = model.remove(index);
-        model.add(index + 1, account);
-        this.accountsList.setSelectedIndex(index + 1);
+    private void moveAccount(final int fromIndex, final int toIndex) {
+        DefaultListModel<Account> model = (DefaultListModel<Account>) this.accountsList.getModel();
+        if (fromIndex < 0 || fromIndex >= model.getSize() || toIndex < 0 || toIndex >= model.getSize() || fromIndex == toIndex) return;
+
+        Account account = model.remove(fromIndex);
+        model.add(toIndex, account);
+        this.accountsList.setSelectedIndex(toIndex);
 
         ViaProxy.getSaveManager().accountsSave.removeAccount(account);
-        ViaProxy.getSaveManager().accountsSave.addAccount(index + 1, account);
+        ViaProxy.getSaveManager().accountsSave.addAccount(toIndex, account);
         ViaProxy.getSaveManager().save();
+    }
+
+    private final class AccountTransferHandler extends TransferHandler {
+
+        private final DataFlavor indexFlavor = new DataFlavor(Integer.class, "Account index");
+
+        @Override
+        protected Transferable createTransferable(JComponent component) {
+            final int index = AccountsTab.this.accountsList.getSelectedIndex();
+            return new Transferable() {
+                @Override
+                public DataFlavor[] getTransferDataFlavors() {
+                    return new DataFlavor[]{indexFlavor};
+                }
+
+                @Override
+                public boolean isDataFlavorSupported(DataFlavor flavor) {
+                    return indexFlavor.equals(flavor);
+                }
+
+                @Override
+                public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+                    if (!isDataFlavorSupported(flavor)) throw new UnsupportedFlavorException(flavor);
+                    return index;
+                }
+            };
+        }
+
+        @Override
+        public int getSourceActions(JComponent component) {
+            return MOVE;
+        }
+
+        @Override
+        public boolean canImport(TransferSupport support) {
+            return support.isDrop() && support.isDataFlavorSupported(indexFlavor);
+        }
+
+        @Override
+        public boolean importData(TransferSupport support) {
+            if (!canImport(support)) return false;
+
+            try {
+                int fromIndex = (Integer) support.getTransferable().getTransferData(indexFlavor);
+                int toIndex = ((JList.DropLocation) support.getDropLocation()).getIndex();
+                if (toIndex > fromIndex) toIndex--;
+                AccountsTab.this.moveAccount(fromIndex, toIndex);
+                return true;
+            } catch (UnsupportedFlavorException | IOException e) {
+                return false;
+            }
+        }
+
     }
 
     private void handleLogin(final TFunction<Consumer<MsaDeviceCode>, Account> requestHandler) {
