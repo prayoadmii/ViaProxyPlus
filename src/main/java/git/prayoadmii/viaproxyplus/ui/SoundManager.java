@@ -17,11 +17,18 @@ import java.io.InputStream;
 public final class SoundManager {
 
     private static final String SOUND_PATH = "assets/viaproxy/sound/";
+    private static final long CLICK_DEBOUNCE_NANOS = 100_000_000L;
+    private static long lastClickNanos;
 
     private SoundManager() {
     }
 
     public static void playClick() {
+        final long now = System.nanoTime();
+        synchronized (SoundManager.class) {
+            if (now - lastClickNanos < CLICK_DEBOUNCE_NANOS) return;
+            lastClickNanos = now;
+        }
         play("click.mp3");
     }
 

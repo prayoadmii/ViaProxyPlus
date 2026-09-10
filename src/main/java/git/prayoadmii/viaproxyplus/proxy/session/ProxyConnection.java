@@ -64,6 +64,7 @@ public class ProxyConnection extends NetClient {
     private HostAndPort clientHandshakeAddress;
     private GameProfile gameProfile;
     private C2SLoginHelloPacket loginHelloPacket;
+    private String clientUsername;
     private Key storedSecretKey;
 
     private UserConnection userConnection;
@@ -160,6 +161,13 @@ public class ProxyConnection extends NetClient {
 
     public void setLoginHelloPacket(final C2SLoginHelloPacket loginHelloPacket) {
         this.loginHelloPacket = loginHelloPacket;
+        if (this.clientUsername == null && loginHelloPacket != null) {
+            this.clientUsername = loginHelloPacket.name;
+        }
+    }
+
+    public String getClientUsername() {
+        return this.clientUsername;
     }
 
     public void setKeyForPreNettyEncryption(final Key key) {
