@@ -63,6 +63,7 @@ public class ViaProxyWindow extends JFrame {
         this.loadIcons();
         this.initWindow();
         this.initTabs();
+        this.initSounds();
 
         FlatInspector.install("ctrl shift I");
         FlatUIDefaultsInspector.install("ctrl shift O");
@@ -119,7 +120,19 @@ public class ViaProxyWindow extends JFrame {
         this.contentPane.addChangeListener(e -> {
             int selectedIndex = contentPane.getSelectedIndex();
             if (selectedIndex >= 0 && selectedIndex < ViaProxyWindow.this.tabs.size()) ViaProxyWindow.this.tabs.get(selectedIndex).onTabOpened();
+            SoundManager.playClick();
         });
+    }
+
+    private void initSounds() {
+        Toolkit.getDefaultToolkit().addAWTEventListener(event -> {
+            if (event instanceof java.awt.event.MouseEvent mouseEvent
+                    && mouseEvent.getID() == java.awt.event.MouseEvent.MOUSE_RELEASED
+                    && mouseEvent.getSource() instanceof AbstractButton button
+                    && button.isEnabled()) {
+                SoundManager.playClick();
+            }
+        }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
     public static void openURL(final String url) {

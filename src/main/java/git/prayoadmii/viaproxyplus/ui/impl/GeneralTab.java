@@ -24,6 +24,7 @@ import git.prayoadmii.viaproxyplus.ViaProxy;
 import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.ClassicAccount;
 import git.prayoadmii.viaproxyplus.ui.I18n;
+import git.prayoadmii.viaproxyplus.ui.SoundManager;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.ui.elements.LinkLabel;
@@ -316,6 +317,7 @@ public class GeneralTab extends UITab {
                     this.updateStateLabel();
                     this.stateButton.setEnabled(true);
                     this.stateButton.setText(I18n.get("tab.general.state.stop"));
+                    SoundManager.playDone();
                 });
             } catch (Throwable e) {
                 Logger.LOGGER.error("Error while starting ViaProxyPlus", e);

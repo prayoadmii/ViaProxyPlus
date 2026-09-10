@@ -108,6 +108,7 @@ dependencies {
     }
     includeInJar "gs.mclo:api:6.2.1"
     includeInJar "net.lenni0451:optconfig:1.1.1"
+    includeInJar "javazoom:jlayer:1.0.1"
 
     includeInJarJ8(compileOnly("xyz.wagyourtail.jvmdowngrader:jvmdowngrader:2.0.1"))
     includeInJarJ8 "xyz.wagyourtail.jvmdowngrader:jvmdowngrader-java-api:2.0.1:downgraded-8"

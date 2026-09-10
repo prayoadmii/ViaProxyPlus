@@ -30,6 +30,7 @@ import git.prayoadmii.viaproxyplus.saves.impl.accounts.BedrockAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.ElyByAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.MicrosoftAccount;
 import git.prayoadmii.viaproxyplus.ui.I18n;
+import git.prayoadmii.viaproxyplus.ui.SoundManager;
 import git.prayoadmii.viaproxyplus.util.ElyByAuthUtil;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
@@ -84,6 +85,13 @@ public class AccountsTab extends UITab {
                     } else if (e.getClickCount() == 2) {
                         int index = AccountsTab.this.accountsList.getSelectedIndex();
                         if (index != -1) AccountsTab.this.markSelected(index);
+                    }
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    if (SwingUtilities.isLeftMouseButton(e) && AccountsTab.this.accountsList.locationToIndex(e.getPoint()) != -1) {
+                        SoundManager.playClick();
                     }
                 }
             });
