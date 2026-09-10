@@ -4,6 +4,12 @@
 
 ---
 
+# **Screenshots**
+
+![ViaProxyPlus With Minecraft 1.8](https://github.com/prayoadmii/ViaProxyPlus/blob/main/.readmeasset/sample.png?raw=true)
+
+---
+
 # **Changes**
 
 **You Can View All Changes We Make In This Fork [Here](https://github.com/prayoadmii/ViaProxyPlus/blob/main/CHANGES.diff)!**
