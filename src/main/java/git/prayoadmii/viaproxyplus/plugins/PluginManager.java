@@ -25,6 +25,7 @@ import net.lenni0451.classtransform.utils.loader.InjectionClassLoader;
 import net.lenni0451.classtransform.utils.tree.IClassProvider;
 import net.lenni0451.reflect.stream.RStream;
 import git.prayoadmii.viaproxyplus.ViaProxy;
+import git.prayoadmii.viaproxyplus.injection.PluginPackageRemapper;
 import git.prayoadmii.viaproxyplus.injection.TransformerDowngrader;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
 import org.objectweb.asm.Opcodes;
@@ -98,6 +99,7 @@ public class PluginManager {
         final TransformerManager transformerManager = new TransformerManager(new LazyFileClassProvider(Collections.singletonList(file), this.rootClassProvider));
         final InjectionClassLoader classLoader = new InjectionClassLoader(transformerManager, PluginManager.class.getClassLoader(), url);
         classLoader.addProtectedPackage("io.netty.");
+        transformerManager.addClassFileTransformer(classLoader, new PluginPackageRemapper());
 
         try {
             final String[] versions = System.getProperty("java.class.version").split("\\.");
