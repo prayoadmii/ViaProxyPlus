@@ -128,7 +128,7 @@ public class ExternalInterface {
                 try {
                     ElyByAuthLibServices.SESSION_SERVICE.joinServer(elyByAccount.getUUID(), elyByAccount.getAccessToken(), serverIdHash);
                 } catch (Throwable e) {
-                    proxyConnection.kickClient("§cFailed to authenticate with Ely.by servers! Please try again in a couple of seconds.");
+                    proxyConnection.kickClient("§cFailed to authenticate with Ely.By servers! Please try again in a couple of seconds.");
                 }
             } else if (!ViaProxy.EVENT_MANAGER.call(new JoinServerRequestEvent(proxyConnection, serverIdHash)).isCancelled()) {
                 proxyConnection.kickClient("§cThe configured target server is in online mode and requires a valid authentication mode.");

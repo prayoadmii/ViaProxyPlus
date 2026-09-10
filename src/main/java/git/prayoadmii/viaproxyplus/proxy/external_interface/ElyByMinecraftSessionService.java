@@ -89,14 +89,14 @@ public final class ElyByMinecraftSessionService implements MinecraftSessionServi
                 return null;
             }
             if (response.statusCode() != 200) {
-                throw new AuthenticationUnavailableException("Ely.by returned HTTP status " + response.statusCode());
+                throw new AuthenticationUnavailableException("Ely.By returned HTTP status " + response.statusCode());
             }
             return JsonParser.parseString(response.body()).getAsJsonObject();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new AuthenticationUnavailableException("Ely.by request was interrupted.", e);
+            throw new AuthenticationUnavailableException("Ely.By request was interrupted.", e);
         } catch (IOException | RuntimeException e) {
-            throw new AuthenticationUnavailableException("Ely.by session request failed.", e);
+            throw new AuthenticationUnavailableException("Ely.By session request failed.", e);
         }
     }
 
@@ -109,13 +109,13 @@ public final class ElyByMinecraftSessionService implements MinecraftSessionServi
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build(), HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200 && response.statusCode() != 204) {
-                throw new AuthenticationException("Ely.by returned HTTP status " + response.statusCode());
+                throw new AuthenticationException("Ely.By returned HTTP status " + response.statusCode());
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new AuthenticationException("Ely.by request was interrupted.", e);
+            throw new AuthenticationException("Ely.By request was interrupted.", e);
         } catch (IOException e) {
-            throw new AuthenticationException("Ely.by session request failed.", e);
+            throw new AuthenticationException("Ely.By session request failed.", e);
         }
     }
 

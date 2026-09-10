@@ -62,7 +62,7 @@ public class ElyByAuthUtil {
         }
 
         if (!response.has("accessToken") || !response.has("selectedProfile")) {
-            throw new IOException("Ely.by authentication response was incomplete.");
+            throw new IOException("Ely.By authentication response was incomplete.");
         }
 
         final JsonObject profile = response.getAsJsonObject("selectedProfile");
@@ -84,31 +84,31 @@ public class ElyByAuthUtil {
             httpResponse = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new IOException("Ely.by authentication request was interrupted.", e);
+            throw new IOException("Ely.By authentication request was interrupted.", e);
         }
         final int statusCode = httpResponse.statusCode();
         final String responseBody = httpResponse.body();
         final JsonElement response = parseResponse(responseBody, statusCode);
         if (statusCode != 200) {
             if (!response.isJsonObject()) {
-                throw new IOException("Ely.by authentication failed with HTTP status " + statusCode + ".");
+                throw new IOException("Ely.By authentication failed with HTTP status " + statusCode + ".");
             }
             return response.getAsJsonObject();
         }
         if (!response.isJsonObject()) {
-            throw new IOException("Ely.by returned an invalid authentication response.");
+            throw new IOException("Ely.By returned an invalid authentication response.");
         }
         return response.getAsJsonObject();
     }
 
     private static JsonElement parseResponse(final String responseBody, final int statusCode) throws IOException {
         if (responseBody == null || responseBody.isBlank()) {
-            throw new IOException("Ely.by returned an empty response with HTTP status " + statusCode + ".");
+            throw new IOException("Ely.By returned an empty response with HTTP status " + statusCode + ".");
         }
         try {
             return JsonParser.parseString(responseBody);
         } catch (RuntimeException e) {
-            throw new IOException("Ely.by returned an invalid JSON response with HTTP status " + statusCode + ".", e);
+            throw new IOException("Ely.By returned an invalid JSON response with HTTP status " + statusCode + ".", e);
         }
     }
 

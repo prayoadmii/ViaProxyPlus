@@ -281,7 +281,7 @@ public class AccountsTab extends UITab {
                     ViaProxyWindow.showException(t);
                 });
             }
-        }, "Add Ely.by Account Thread");
+        }, "Add Ely.By Account Thread");
         this.addThread.setDaemon(true);
         this.addThread.start();
     }

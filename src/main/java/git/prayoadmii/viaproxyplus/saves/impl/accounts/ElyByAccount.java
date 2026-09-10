@@ -72,6 +72,6 @@ public class ElyByAccount extends Account {
 
     @Override
     public String getDisplayString() {
-        return this.name + " (Ely.by)";
+        return this.name + " (Ely.By)";
     }
 }

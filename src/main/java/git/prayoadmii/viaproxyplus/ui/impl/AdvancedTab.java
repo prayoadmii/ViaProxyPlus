@@ -104,10 +104,10 @@ public class AdvancedTab extends UITab {
             this.proxyOnlineMode.addActionListener(event -> {
                 if (!this.proxyOnlineMode.isSelected()) return;
 
-                final Object[] options = {"Mojang", "Ely.by", "Cancel"};
+                final Object[] options = {"Mojang", "Ely.By", I18n.get("generic.cancel")};
                 final int selected = JOptionPane.showOptionDialog(this.viaProxyWindow,
-                    "Choose the authentication service for clients connecting to the proxy:",
-                    "Proxy Online Mode",
+                    I18n.get("tab.advanced.proxy_online_mode.popup.prompt"),
+                    I18n.get("tab.advanced.proxy_online_mode.label"),
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
