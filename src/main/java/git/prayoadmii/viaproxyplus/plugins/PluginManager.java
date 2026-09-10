@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class PluginManager {
     private final Yaml yaml = new Yaml();
     private final IClassProvider rootClassProvider = new GuavaClassPathProvider();
     private final List<ViaProxyPlugin> plugins = new ArrayList<>();
+    private final Map<ViaProxyPlugin, File> pluginFiles = new IdentityHashMap<>();
 
     public PluginManager() {
         this.loadPlugins();
@@ -68,6 +70,17 @@ public class PluginManager {
         return null;
     }
 
+    public File getPluginFile(final ViaProxyPlugin plugin) {
+        return this.pluginFiles.get(plugin);
+    }
+
+    public List<File> getDisabledPluginFiles() {
+        if (!PLUGINS_DIR.isDirectory()) return Collections.emptyList();
+        final File[] files = PLUGINS_DIR.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar.disabled"));
+        if (files == null) return Collections.emptyList();
+        return List.of(files);
+    }
+
     private void loadPlugins() {
         if (!PLUGINS_DIR.exists() || !PLUGINS_DIR.isDirectory()) {
             if (!PLUGINS_DIR.mkdirs()) {
@@ -79,7 +92,8 @@ public class PluginManager {
         if (files == null) return;
 
         for (File file : files) {
-            if (!file.getName().toLowerCase().endsWith(".jar")) continue;
+            final String fileName = file.getName().toLowerCase();
+            if (!fileName.endsWith(".jar") || fileName.endsWith(".disabled")) continue;
             try {
                 loadAndScanJar(file);
             } catch (Throwable e) {
@@ -142,6 +156,7 @@ public class PluginManager {
 
         Logger.LOGGER.info("Loaded plugin '" + plugin.getName() + "' by " + plugin.getAuthor() + " (v" + plugin.getVersion() + ")");
         this.plugins.add(plugin);
+        this.pluginFiles.put(plugin, file);
     }
 
     private void enablePlugin(final ViaProxyPlugin plugin) {
