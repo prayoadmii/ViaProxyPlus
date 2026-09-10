@@ -14,9 +14,7 @@
 
 # **Plugins Note**
 
-**We're Noticed That Plugin Won't Load In This Fork And I Think It's Because We Changed Package Name**
-
-**If Your Plugin Have Package Name Hardcoded I Think You Need To Change To `git.prayoadmii.viaproxyplus` And It's Will Work... I Think...**
+**All Known Plugins Issues Was Fixed In Version 3.6.0 And Other ViaProxy Plugins Should Work Fine Now...**
 
 ---
 
