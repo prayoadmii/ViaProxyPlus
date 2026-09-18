@@ -4,6 +4,22 @@
 
 ---
 
+## Supported Server versions
+- Release (1.0.0 - 26.3)
+- Beta (b1.0 - b1.8.1)
+- Alpha (a1.0.15 - a1.2.6)
+- Classic (c0.0.15 - c0.30 including [CPE](https://wiki.vg/Classic_Protocol_Extension))
+- April Fools (3D Shareware, 20w14infinite, 25w14craftmine)
+- Combat Snapshots (Combat Test 8c)
+- Bedrock Edition 1.26.45 (WIP, [Many features are missing](https://github.com/RaphiMC/ViaBedrock#features))
+
+## Supported Client versions
+- Release (1.7.2 - 26.3)
+- April Fools (3D Shareware, 25w14craftmine)
+- Bedrock Edition (Requires the [Geyser plugin](https://geysermc.org/download))
+- Beta 1.7.3 (Requires the [Beta2Release plugin](https://github.com/ViaVersionAddons/ViaProxyBeta2Release))
+- Classic, Alpha, Beta, Release 1.0 - 1.6.4 (Only passthrough)
+
 # **Screenshots**
 
 ![ViaProxyPlus With Minecraft 1.8](https://github.com/prayoadmii/ViaProxyPlus/blob/main/.readmeasset/sample.png?raw=true)
