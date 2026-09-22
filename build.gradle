@@ -50,12 +50,12 @@ repositories {
 }
 
 dependencies {
-    includeInJar "com.viaversion:viaversion-common:5.12.0"
-    includeInJar "com.viaversion:viabackwards-common:5.12.0"
+    includeInJar "com.viaversion:viaversion-common:5.12.1-SNAPSHOT"
+    includeInJar "com.viaversion:viabackwards-common:5.12.1-SNAPSHOT"
     includeInJar "com.viaversion:viarewind-common:4.2.0"
     includeInJar "net.raphimc:ViaLegacy:3.1.0"
     includeInJar "com.viaversion:viaaprilfools-common:4.2.3"
-    includeInJar "net.raphimc:ViaBedrock:0.0.31-SNAPSHOT"
+    includeInJar "net.raphimc:ViaBedrock:0.0.31-20260918.161855-1"
 
     includeInJar "com.google.guava:guava:33.7.1-jre"
     includeInJar "com.google.code.gson:gson:2.14.0"
@@ -66,7 +66,7 @@ dependencies {
     includeInJar "net.sf.jopt-simple:jopt-simple:5.0.4"
     includeInJar "org.apache.logging.log4j:log4j-core:2.26.1"
     includeInJar "org.apache.logging.log4j:log4j-slf4j2-impl:2.26.1"
-    includeInJar "org.jline:jansi:4.4.3"
+    includeInJar "org.jline:jansi:4.4.5"
     includeInJar("com.mojang:authlib:6.0.58") {
         exclude group: "org.slf4j", module: "slf4j-api"
     }
