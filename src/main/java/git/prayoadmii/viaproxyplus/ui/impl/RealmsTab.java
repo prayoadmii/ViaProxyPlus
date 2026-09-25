@@ -36,7 +36,6 @@ import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.BedrockAccount;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.MicrosoftAccount;
 import git.prayoadmii.viaproxyplus.ui.I18n;
-import git.prayoadmii.viaproxyplus.ui.SoundManager;
 import git.prayoadmii.viaproxyplus.ui.UITab;
 import git.prayoadmii.viaproxyplus.ui.ViaProxyWindow;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
