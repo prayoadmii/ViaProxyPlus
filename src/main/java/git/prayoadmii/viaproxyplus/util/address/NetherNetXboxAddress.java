@@ -15,19 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package git.prayoadmii.viaproxyplus.util;
+package git.prayoadmii.viaproxyplus.util.address;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
+import org.cloudburstmc.netty.channel.nethernet.config.NetherNetAddress;
 
-public class NetherNetInetSocketAddress extends InetSocketAddress {
+public class NetherNetXboxAddress extends NetherNetAddress implements git.prayoadmii.viaproxyplus.util.address.NetherNetAddress {
 
-    public NetherNetInetSocketAddress(final InetAddress addr, final int port) {
-        super(addr, port);
-    }
-
-    public NetherNetInetSocketAddress(final String hostname, final int port) {
-        super(hostname, port);
+    public NetherNetXboxAddress(final String networkId) {
+        super(networkId);
     }
 
 }

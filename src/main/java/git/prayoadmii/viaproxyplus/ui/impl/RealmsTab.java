@@ -239,6 +239,9 @@ public class RealmsTab extends UITab {
                                 javaRealmsService.acceptTosUnchecked();
                                 join.doClick(0);
                             }
+                        } else if (realmsService instanceof BedrockRealmsService bedrockRealmsService && cause instanceof RealmsRequestException realmsRequestException && realmsRequestException.getErrorCode() == RealmsRequestException.ERROR_TIMELINE_OPT_IN_REQUIRED) {
+                            bedrockRealmsService.updateWorldStorySettingsUnchecked(server, null, true);
+                            join.doClick(0);
                         } else {
                             Logger.LOGGER.error("Failed to join realm", cause);
                             ViaProxyWindow.showError(I18n.get("tab.realms.error_generic", cause.getMessage()));
@@ -261,8 +264,8 @@ public class RealmsTab extends UITab {
 
             switch (joinInformation.getNetworkProtocol()) {
                 case RealmsJoinInformation.PROTOCOL_DEFAULT -> generalTab.serverAddress.setText(joinInformation.getAddress());
-                case RealmsJoinInformation.PROTOCOL_NETHERNET -> generalTab.serverAddress.setText("nethernet://" + joinInformation.getAddress());
-                case RealmsJoinInformation.PROTOCOL_NETHERNET_JSONRPC -> generalTab.serverAddress.setText("nethernet-rpc://" + joinInformation.getAddress());
+                case RealmsJoinInformation.PROTOCOL_NETHERNET -> generalTab.serverAddress.setText("nethernet-xbox://" + joinInformation.getAddress());
+                case RealmsJoinInformation.PROTOCOL_NETHERNET_JSONRPC -> generalTab.serverAddress.setText("nethernet-xbox-json-rpc://" + joinInformation.getAddress());
                 default -> throw new IllegalArgumentException("Unknown realms network protocol: " + joinInformation.getNetworkProtocol());
             }
 

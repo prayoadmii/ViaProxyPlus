@@ -15,14 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package git.prayoadmii.viaproxyplus.util;
+package git.prayoadmii.viaproxyplus.util.address;
 
-import dev.kastle.netty.channel.nethernet.config.NetherNetAddress;
-
-public class NetherNetJsonRpcAddress extends NetherNetAddress {
-
-    public NetherNetJsonRpcAddress(final String networkId) {
-        super(networkId);
-    }
-
+public interface NetherNetAddress {
 }
