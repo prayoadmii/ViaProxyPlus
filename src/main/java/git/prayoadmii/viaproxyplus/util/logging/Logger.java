@@ -44,6 +44,7 @@ public class Logger {
         if (System.console() != null) { // jANSI is the best lib. If there is no console it just segfaults the JVM process. Thanks!
             AnsiConsole.systemInstall();
         }
+
         System.setErr(new LoggerPrintStream("STDERR", SYSERR));
         System.setOut(new LoggerPrintStream("STDOUT", SYSOUT));
     }
@@ -63,6 +64,7 @@ public class Logger {
     public static void u_log(final Level level, final String title, final ProxyConnection proxyConnection, final String msg) {
         final SocketAddress address = proxyConnection.getC2P().remoteAddress();
         final GameProfile gameProfile = proxyConnection.getGameProfile();
+        
         u_log(level, title, address, gameProfile, msg);
     }
 

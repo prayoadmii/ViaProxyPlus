@@ -23,7 +23,6 @@ import net.raphimc.vialegacy.api.util.GameProfileUtil;
 import java.util.UUID;
 
 public class OfflineAccount extends Account {
-
     private final String name;
     private final UUID uuid;
 
@@ -40,8 +39,10 @@ public class OfflineAccount extends Account {
     @Override
     public JsonObject toJson() {
         final JsonObject jsonObject = new JsonObject();
+        
         jsonObject.addProperty("name", this.name);
         jsonObject.addProperty("uuid", this.uuid.toString());
+
         return jsonObject;
     }
 
@@ -59,5 +60,4 @@ public class OfflineAccount extends Account {
     public String getDisplayString() {
         return this.name + " (Offline)";
     }
-
 }

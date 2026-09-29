@@ -26,19 +26,21 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class MicrosoftAccount extends Account {
-
     private final JavaAuthManager javaAuthManager;
 
     public MicrosoftAccount(final JsonObject jsonObject) {
         this.javaAuthManager = JavaAuthManager.fromJson(MinecraftAuth.createHttpClient(), jsonObject);
+
         if (!this.javaAuthManager.getMinecraftProfile().hasValue()) {
             this.javaAuthManager.getMinecraftProfile().refreshUnchecked();
         }
+
         this.javaAuthManager.getChangeListeners().add(() -> ViaProxy.getSaveManager().save());
     }
 
     public MicrosoftAccount(final JavaAuthManager javaAuthManager) throws IOException {
         this.javaAuthManager = javaAuthManager;
+
         javaAuthManager.getMinecraftToken().refreshIfExpired();
         javaAuthManager.getMinecraftProfile().refreshIfExpired();
         javaAuthManager.getMinecraftPlayerCertificates().refreshIfExpired();
@@ -68,5 +70,4 @@ public class MicrosoftAccount extends Account {
     public String getDisplayString() {
         return this.getName() + " (Microsoft)";
     }
-
 }

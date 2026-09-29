@@ -142,22 +142,24 @@ jar {
     }
 }
 
-// downgradeJar {
-//     dependsOn(configurations.includeInJarJ8)
-//     from {
-//         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//         configurations.includeInJarJ8.collect {
-//             zipTree(it)
-//         }
-//     } {
-//         exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
-//     }
+downgradeJar {
+    dependsOn(build)
 
-//     downgradeTo = JavaVersion.VERSION_1_8
-//     ignoreWarningsIn.add("net/lenni0451/commons/httpclient/executor/HttpClientExecutor")
-//     archiveClassifier = null
-//     archiveVersion = project.version + "+java8"
-// }
-// build.finalizedBy("downgradeJar")
+    from {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        configurations.includeInJarJ8.collect {
+            zipTree(it)
+        }
+    } {
+        exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
+    }
+
+    downgradeTo = JavaVersion.VERSION_1_8
+
+    ignoreWarningsIn.add("net/lenni0451/commons/httpclient/executor/HttpClientExecutor")
+
+    archiveClassifier = null
+    archiveVersion = project.version + "+java8"
+}
 
 tasks.javadoc.enabled = false

@@ -1,16 +1,23 @@
 # **ViaProxyPlus**
 
 *You Can Read Original README At [Official ViaProxy Repo](https://github.com/ViaVersion/ViaProxy)*
+---
+
+### **WARNING!**
+
+**Java 8 Jar Are No-Longer Available And Supported After ViaProxyPlus 3.7.4**
+
+**You Can Build Java 8 Jar By Clone This Repository And Run ./gradlew downgradeJar**
 
 ---
 
-# **Screenshots**
+### **Screenshots**
 
 ![ViaProxyPlus With Minecraft 1.8](https://github.com/prayoadmii/ViaProxyPlus/blob/main/.readmeasset/sample.png?raw=true)
 
 ---
 
-# **Changes**
+### **Changes**
 
 **You Can View All Changes We Make In This Fork [Here](https://github.com/prayoadmii/ViaProxyPlus/blob/main/CHANGES.diff)!**
 
@@ -18,7 +25,7 @@
 
 ---
 
-# **Plugins Note**
+### **Plugins Note**
 
 **All Known Plugins Issues Was Fixed In Version 3.6.0 And Other ViaProxy Plugins Should Work Fine Now...**
 
@@ -26,14 +33,14 @@
 
 ---
 
-# **Contact**
+### **Contact**
 
 > [!WARNING]
 > Due To This Is A Fork Project Please Don't Try To Ask For Help In [Official ViaVersion Discord Server](https://discord.gg/viaversion) Or Create Issue In [Official ViaProxy GitHub Repo](https://github.com/ViaVersion/ViaProxy/issues) Instead Please Ask For Help In [PrayoadMii's Software Discord Server](https://discord.prayoadmii.qzz.io/) And Create Issue In [ViaProxyPlus Issue Tracker](https://github.com/prayoadmii/ViaProxyPlus/issues)
 
 ---
 
-# **Credits And License**
+### **Credits And License**
 
 **This Project Was Built/Fork From [ViaProxy](https://github.com/ViaVersion/ViaProxy) By RK_01/RaphiMC With All Contributors This Repo Always Up-To-Date With Upstream This Project License Under GPLv3**
 

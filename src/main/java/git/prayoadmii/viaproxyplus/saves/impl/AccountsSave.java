@@ -33,7 +33,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class AccountsSave extends AbstractSave {
-
     private final List<Account> accounts = new ArrayList<>();
 
     public AccountsSave() {
@@ -43,6 +42,7 @@ public class AccountsSave extends AbstractSave {
     @Override
     public void load(JsonElement jsonElement) throws Exception {
         final List<ClassLoader> classLoaders = new ArrayList<>();
+        
         classLoaders.add(ViaProxy.class.getClassLoader());
         classLoaders.addAll(ViaProxy.getPluginManager().getPlugins().stream().map(ViaProxyPlugin::getClassLoader).toList());
 
@@ -64,27 +64,33 @@ public class AccountsSave extends AbstractSave {
     @Override
     public JsonElement save() {
         final JsonArray array = new JsonArray();
+
         for (Account account : this.accounts) {
             final JsonObject jsonObject = account.toJson();
+
             jsonObject.addProperty("accountType", account.getClass().getName());
             array.add(jsonObject);
         }
+
         return array;
     }
 
     public Account addAccount(final String username) {
         final Account account = new OfflineAccount(username);
         this.accounts.add(account);
+
         return account;
     }
 
     public Account addAccount(final Account account) {
         this.accounts.add(account);
+
         return account;
     }
 
     public Account addAccount(final int index, final Account account) {
         this.accounts.add(index, account);
+
         return account;
     }
 
@@ -95,5 +101,4 @@ public class AccountsSave extends AbstractSave {
     public List<Account> getAccounts() {
         return Collections.unmodifiableList(this.accounts);
     }
-
 }

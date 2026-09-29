@@ -21,7 +21,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 public class NetherNetLanAddress extends InetSocketAddress implements NetherNetAddress{
-
     public NetherNetLanAddress(final InetAddress addr, final int port) {
         super(addr, port);
     }
@@ -29,5 +28,4 @@ public class NetherNetLanAddress extends InetSocketAddress implements NetherNetA
     public NetherNetLanAddress(final String hostname, final int port) {
         super(hostname, port);
     }
-
 }

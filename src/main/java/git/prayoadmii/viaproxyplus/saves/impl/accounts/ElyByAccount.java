@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import java.util.UUID;
 
 public class ElyByAccount extends Account {
-
     private final String name;
     private final UUID uuid;
     private final String accessToken;
@@ -31,6 +30,7 @@ public class ElyByAccount extends Account {
     public ElyByAccount(final JsonObject jsonObject) {
         this.name = jsonObject.get("name").getAsString();
         this.uuid = UUID.fromString(jsonObject.get("uuid").getAsString());
+        
         this.accessToken = jsonObject.get("accessToken").getAsString();
         this.clientToken = jsonObject.has("clientToken") ? jsonObject.get("clientToken").getAsString() : "";
     }
@@ -38,6 +38,7 @@ public class ElyByAccount extends Account {
     public ElyByAccount(final String name, final UUID uuid, final String accessToken, final String clientToken) {
         this.name = name;
         this.uuid = uuid;
+
         this.accessToken = accessToken;
         this.clientToken = clientToken;
     }
@@ -45,10 +46,13 @@ public class ElyByAccount extends Account {
     @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
+
         json.addProperty("name", this.name);
         json.addProperty("uuid", this.uuid.toString());
+
         json.addProperty("accessToken", this.accessToken);
         json.addProperty("clientToken", this.clientToken);
+
         return json;
     }
 

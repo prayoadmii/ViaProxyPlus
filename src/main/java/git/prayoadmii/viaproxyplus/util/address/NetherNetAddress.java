@@ -18,4 +18,5 @@
 package git.prayoadmii.viaproxyplus.util.address;
 
 public interface NetherNetAddress {
+    // WOW! "EMPTINESS"
 }

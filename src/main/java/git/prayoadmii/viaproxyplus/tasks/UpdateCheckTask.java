@@ -39,7 +39,6 @@ import java.net.URL;
 import static git.prayoadmii.viaproxyplus.ViaProxy.VERSION;
 
 public class UpdateCheckTask implements Runnable {
-
     private final boolean hasUI;
 
     public UpdateCheckTask(final boolean hasUI) {
@@ -50,43 +49,61 @@ public class UpdateCheckTask implements Runnable {
     @SuppressWarnings("UnreachableCode")
     public void run() {
         if (VERSION.startsWith("$")) return; // Dev env check
+
         try {
             URL url = URI.create("https://api.github.com/repos/prayoadmii/ViaProxyPlus/releases/latest").toURL();
+
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "ViaProxyPlus/" + VERSION);
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
 
             InputStream in = con.getInputStream();
+
             byte[] bytes = new byte[1024];
+
             int read;
+
             StringBuilder builder = new StringBuilder();
+
             while ((read = in.read(bytes)) != -1) builder.append(new String(bytes, 0, read));
+
             con.disconnect();
 
             JsonObject object = JsonParser.parseString(builder.toString()).getAsJsonObject();
             String latestVersion = getReleaseVersion(object.get("tag_name").getAsString());
+
             boolean updateAvailable;
+
             try {
                 Semver versionSemver = new Semver(VERSION);
                 Semver latestVersionSemver = new Semver(latestVersion);
+
                 updateAvailable = latestVersionSemver.isGreaterThan(versionSemver);
+
                 if (versionSemver.isGreaterThan(latestVersionSemver)) Logger.LOGGER.warn("You are running a dev version of ViaProxyPlus");
             } catch (Throwable t) {
                 updateAvailable = !VERSION.equals(latestVersion);
             }
             if (updateAvailable) {
                 Logger.LOGGER.warn("You are running an outdated version of ViaProxyPlus! Latest version: " + latestVersion);
+
                 if (this.hasUI && JarUtil.getJarFile().isPresent()) {
                     final boolean runsJava8 = System.getProperty("java.version").startsWith("1.8");
+
                     JsonArray assets = object.getAsJsonArray("assets");
                     boolean found = false;
+
                     for (JsonElement asset : assets) {
                         JsonObject assetObject = asset.getAsJsonObject();
+
                         if ((this.isMainViaProxyJar(object, assetObject) && !runsJava8) || this.isJava8ViaProxyJar(object, assetObject) && runsJava8) {
                             found = true;
+                            
                             SwingUtilities.invokeLater(() -> this.showUpdateQuestion(assetObject.get("name").getAsString(), assetObject.get("browser_download_url").getAsString(), latestVersion));
+
                             break;
                         }
                     }
@@ -103,20 +120,26 @@ public class UpdateCheckTask implements Runnable {
 
     private void showUpdateQuestion(final String name, final String downloadUrl, final String latestVersion) {
         int chosen = JOptionPane.showConfirmDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.info", VERSION, latestVersion) + "\n\n" + I18n.get("popup.update.question"), "ViaProxyPlus", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
         if (chosen == JOptionPane.YES_OPTION) {
             final File f = new File(JarUtil.getJarFile().map(File::getParentFile).orElseThrow(), name);
+
             new DownloadPopup(ViaProxy.getForegroundWindow(), downloadUrl, f, () -> SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(ViaProxy.getForegroundWindow(), I18n.get("popup.update.success"), "ViaProxyPlus", JOptionPane.INFORMATION_MESSAGE);
+
                 try {
                     JarUtil.launch(f);
+
                     System.exit(0);
                 } catch (Throwable e) {
                     Logger.LOGGER.error("Could not start the new ViaProxyPlus jar", e);
+
                     ViaProxyWindow.showException(e);
                 }
             }), t -> {
                 if (t != null) {
                     Logger.LOGGER.error("Could not download the latest version of ViaProxyPlus", t);
+
                     ViaProxyWindow.showException(t);
                 }
             });
@@ -129,14 +152,15 @@ public class UpdateCheckTask implements Runnable {
 
     private String getReleaseVersion(final String tagName) {
         final String versionPrefix = "ViaProxyPlus_";
+
         if (tagName.startsWith(versionPrefix)) {
             return tagName.substring(versionPrefix.length()).replaceFirst("^v", "");
         }
+
         return tagName.replaceFirst("^v", "");
     }
 
     private boolean isJava8ViaProxyJar(final JsonObject root, final JsonObject assetObject) {
         return assetObject.get("name").getAsString().equals(root.get("name").getAsString() + "+java8.jar");
     }
-
 }

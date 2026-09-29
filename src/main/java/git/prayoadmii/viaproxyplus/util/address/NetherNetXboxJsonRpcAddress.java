@@ -18,9 +18,7 @@
 package git.prayoadmii.viaproxyplus.util.address;
 
 public class NetherNetXboxJsonRpcAddress extends org.cloudburstmc.netty.channel.nethernet.config.NetherNetAddress implements NetherNetAddress {
-
     public NetherNetXboxJsonRpcAddress(final String networkId) {
         super(networkId);
     }
-
 }
