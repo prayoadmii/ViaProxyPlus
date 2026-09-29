@@ -3,6 +3,6 @@ When You Warking On Merge Pull Requests Or Updating My Code Here's What To Keep
 1. My Package Name (git.prayoadmii.viaproxyplus)
 2. My Translations (src/main/resources/assets/language)
 3. My Added Features (Read CHANGES.diff WARNING: Some Features May Not Listed There)
-4. My Changes - Canges I Made In The Code
+4. My Changes - Canges I Made In The Code (Version Number Are Counted Here Too)
 
 Thanks For Working For Me - PrayoadMii
