@@ -30,6 +30,7 @@ public class ConsoleHandler {
             System.in.available();
         } catch (IOException e) {
             Logger.LOGGER.info("Console input is not available. CLI commands are disabled.");
+            
             return;
         }
 
@@ -39,9 +40,11 @@ public class ConsoleHandler {
     private static void listen() {
         final CommandManager commandManager = new CommandManager();
         final Scanner scanner = new Scanner(System.in);
+
         try {
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
+
                 try {
                     commandManager.execute(line);
                 } catch (Throwable e) {
@@ -51,6 +54,8 @@ public class ConsoleHandler {
         } catch (Throwable e) {
             Logger.LOGGER.error("Error while reading console input", e);
         }
+
+        scanner.close();
     }
 
 }

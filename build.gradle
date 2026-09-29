@@ -122,12 +122,16 @@ dependencies {
     includeInJarJ8 "xyz.wagyourtail.jvmdowngrader:jvmdowngrader-java-api:2.0.1:downgraded-8"
 }
 
+def runDir = layout.projectDirectory.dir("run")
+
+runDir.asFile.mkdirs()
+
 application {
     mainClass = "git.prayoadmii.viaproxyplus.ViaProxy"
 }
 
 tasks.withType(JavaExec).configureEach {
-    workingDir = file("run")
+    workingDir(runDir)
 }
 
 jar {
@@ -138,22 +142,22 @@ jar {
     }
 }
 
-downgradeJar {
-    dependsOn(configurations.includeInJarJ8)
-    from {
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        configurations.includeInJarJ8.collect {
-            zipTree(it)
-        }
-    } {
-        exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
-    }
+// downgradeJar {
+//     dependsOn(configurations.includeInJarJ8)
+//     from {
+//         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//         configurations.includeInJarJ8.collect {
+//             zipTree(it)
+//         }
+//     } {
+//         exclude "META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA"
+//     }
 
-    downgradeTo = JavaVersion.VERSION_1_8
-    ignoreWarningsIn.add("net/lenni0451/commons/httpclient/executor/HttpClientExecutor")
-    archiveClassifier = null
-    archiveVersion = project.version + "+java8"
-}
-build.finalizedBy("downgradeJar")
+//     downgradeTo = JavaVersion.VERSION_1_8
+//     ignoreWarningsIn.add("net/lenni0451/commons/httpclient/executor/HttpClientExecutor")
+//     archiveClassifier = null
+//     archiveVersion = project.version + "+java8"
+// }
+// build.finalizedBy("downgradeJar")
 
 tasks.javadoc.enabled = false
