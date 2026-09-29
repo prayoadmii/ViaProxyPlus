@@ -2,9 +2,10 @@
 + Account Screen Now Allow You To Add Ely.By Account
 + "Proxy Online Mode" Now Let You Choose To Check Player With Mojang Or Ely.By
 + Account List Are Now Drag And Dropable (You Can Drag And Drop To Reorder Them)
-+ Added Thailand Reanslation
++ Added Thailand Translation
 + Changed Splash Screen Logo
 + Added Plugins Management Screen
 + Added Players Management Screen
 
-- All Other Translation Are Removed :P
+- All Other Translations Are Removed :P
+- Java 8 Build Are Disabled
