@@ -7,7 +7,7 @@
 
 **Java 8 Jar Are No-Longer Available And Supported After ViaProxyPlus 3.7.4**
 
-**You Can Build Java 8 Jar By Clone This Repository And Run ./gradlew downgradeJar**
+**You Can Build Java 8 Jar By Clone This Repository And Run `./gradlew downgradeJar`**
 
 ---
 
