@@ -11,11 +11,9 @@ package git.prayoadmii.viaproxyplus.ui;
 
 import javazoom.jl.player.Player;
 
-import javax.swing.JComboBox;
 import java.io.InputStream;
 
 public final class SoundManager {
-
     private static final String SOUND_PATH = "assets/viaproxy/sound/";
 
     private SoundManager() {
@@ -31,6 +29,7 @@ public final class SoundManager {
 
     private static void play(final String sound) {
         final InputStream stream = SoundManager.class.getClassLoader().getResourceAsStream(SOUND_PATH + sound);
+
         if (stream == null) return;
 
         Thread playback = new Thread(() -> {
@@ -39,8 +38,8 @@ public final class SoundManager {
             } catch (Throwable ignored) {
             }
         }, "ViaProxyPlus-Sound");
+
         playback.setDaemon(true);
         playback.start();
     }
-
 }
