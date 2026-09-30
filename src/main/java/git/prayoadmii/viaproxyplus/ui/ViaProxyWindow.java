@@ -150,6 +150,14 @@ public class ViaProxyWindow extends JFrame {
                     && comboBox.isEnabled()) {
                 SoundManager.playClick();
             }
+            if (event instanceof java.awt.event.MouseEvent mouseEvent
+                    && mouseEvent.getID() == java.awt.event.MouseEvent.MOUSE_RELEASED
+                    && mouseEvent.getSource() instanceof JList<?> optionList) {
+                JPopupMenu popup = (JPopupMenu) SwingUtilities.getAncestorOfClass(JPopupMenu.class, optionList);
+                if (popup != null && popup.getInvoker() instanceof JComboBox<?> comboBox && comboBox.isEnabled()) {
+                    SoundManager.playClick();
+                }
+            }
         }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
