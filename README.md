@@ -36,7 +36,7 @@
 ### **Contact**
 
 > [!WARNING]
-> Due To This Is A Fork Project Please Don't Try To Ask For Help In [Official ViaVersion Discord Server](https://discord.gg/viaversion) Or Create Issue In [Official ViaProxy GitHub Repo](https://github.com/ViaVersion/ViaProxy/issues) Instead Please Ask For Help In [PrayoadMii's Software Discord Server](https://discord.prayoadmii.qzz.io/) And Create Issue In [ViaProxyPlus Issue Tracker](https://github.com/prayoadmii/ViaProxyPlus/issues)
+> Due To This Is A Fork Project Please Don't Try To Ask For Help In [Official ViaVersion Discord Server](https://discord.gg/viaversion) Or Create Issue In [Official ViaProxy GitHub Repo](https://github.com/ViaVersion/ViaProxy/issues) Instead Please Ask For Help In [PrayoadMii's Software Discord Server](https://discord.prayoadmii.qzz.io/) And Create Issue In [ViaProxyPlus Issue Tracker](https://github.com/prayoadmii/ViaProxyPlus/issues) But For Basic ViaProxy Usage You Can Go Ask Them (Just Don't Ask About Plus Features)
 
 ---
 
