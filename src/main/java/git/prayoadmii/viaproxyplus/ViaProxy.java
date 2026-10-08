@@ -74,7 +74,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ViaProxy {
-
     public static final String VERSION = "${version}";
     public static final String IMPL_VERSION = "git-ViaProxyPlus-${version}:${commit_hash}";
 
@@ -97,20 +96,27 @@ public class ViaProxy {
     public static void main(String[] args) throws Throwable {
         final IClassProvider classProvider = new GuavaClassPathProvider();
         final TransformerManager transformerManager = new TransformerManager(classProvider);
+
         transformerManager.addTransformerPreprocessor(new MixinsTranslator());
         transformerManager.addTransformer("git.prayoadmii.viaproxyplus.injection.mixins.**");
+        
         if (instrumentation != null) {
             transformerManager.hookInstrumentation(instrumentation);
+
             injectedMain("Launcher Agent", args);
+
             return;
         }
+
         try {
             transformerManager.hookInstrumentation(Agents.getInstrumentation());
         } catch (Throwable t) {
             final InjectionClassLoader injectionClassLoader = new InjectionClassLoader(transformerManager, ClassLoaders.getSystemClassPath());
             injectionClassLoader.setPriority(EnumLoaderPriority.PARENT_FIRST);
+
             Thread.currentThread().setContextClassLoader(injectionClassLoader);
             Methods.invoke(null, Methods.getDeclaredMethod(injectionClassLoader.loadClass(ViaProxy.class.getName()), "injectedMain", String.class, String[].class), "Injection ClassLoader", args);
+
             return;
         }
         injectedMain("Runtime Agent", args);
@@ -122,11 +128,14 @@ public class ViaProxy {
         final boolean useCLI = args.length > 0 && args[0].equals("cli");
 
         final List<File> potentialCwds = new ArrayList<>();
+
         if (System.getenv("VP_RUN_DIR") != null) {
             potentialCwds.add(new File(System.getenv("VP_RUN_DIR")));
         }
+
         potentialCwds.add(new File(System.getProperty("user.dir")));
         potentialCwds.add(new File("."));
+
         JarUtil.getJarFile().map(File::getParentFile).ifPresent(potentialCwds::add);
 
         final List<File> failedCwds = new ArrayList<>();
@@ -134,9 +143,11 @@ public class ViaProxy {
             if (potentialCwd.isDirectory()) {
                 if (Files.isWritable(potentialCwd.toPath())) {
                     CWD = potentialCwd;
+
                     break;
                 }
             }
+
             failedCwds.add(potentialCwd);
         }
         if (CWD == null) { // Backup strategy for weird permission setups: Attempt to write a dummy file to check if the directory is writable
@@ -144,36 +155,46 @@ public class ViaProxy {
                 if (potentialCwd.isDirectory()) {
                     try {
                         final Path testFile = new File(potentialCwd, "viaproxy_writable_test.txt").toPath();
+
                         Files.deleteIfExists(testFile);
                         Files.writeString(testFile, "This is just a test. This file can be deleted.");
                         Files.deleteIfExists(testFile);
+
                         CWD = potentialCwd;
+
                         break;
                     } catch (IOException ignored) {
                     }
                 }
             }
         }
+
         if (CWD != null) {
             System.setProperty("user.dir", CWD.getAbsolutePath());
         } else if (useUI) {
-                        JOptionPane.showMessageDialog(null, "Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.", "ViaProxyPlus", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.", "ViaProxyPlus", JOptionPane.ERROR_MESSAGE);
+
             System.exit(1);
         } else {
             System.err.println("Could not find a suitable directory to use as working directory. Make sure that the current folder is writeable.");
             System.err.println("Attempted to use the following directories:");
+
             for (File failedCwd : failedCwds) {
                 System.err.println("\t- " + failedCwd.getAbsolutePath());
             }
+
             System.exit(1);
         }
 
         Logger.setup();
+
         if (!useUI && !useConfig && !useCLI) {
             final String fileName = JarUtil.getJarFile().map(File::getName).orElse("ViaProxyPlus.jar");
+
             Logger.LOGGER.info("Usage: java -jar " + fileName + " | Starts ViaProxyPlus in graphical mode if available");
             Logger.LOGGER.info("Usage: java -jar " + fileName + " config <config file> | Starts ViaProxyPlus with the specified config file");
             Logger.LOGGER.info("Usage: java -jar " + fileName + " cli --help | Starts ViaProxyPlus in CLI mode");
+
             System.exit(1);
         }
 
@@ -181,8 +202,10 @@ public class ViaProxy {
         Logger.LOGGER.info("Using java version: " + System.getProperty("java.vm.name") + " " + System.getProperty("java.version") + " (" + System.getProperty("java.vendor") + ") on " + System.getProperty("os.name"));
         Logger.LOGGER.info("Available memory (bytes): " + Runtime.getRuntime().maxMemory());
         Logger.LOGGER.info("Working directory: " + CWD.getAbsolutePath());
+
         if (!failedCwds.isEmpty()) {
             Logger.LOGGER.warn("Failed to use the following directories as working directory:");
+
             for (File failedCwd : failedCwds) {
                 Logger.LOGGER.warn("\t- " + failedCwd.getAbsolutePath());
             }
@@ -193,22 +216,29 @@ public class ViaProxy {
 
         final SplashScreen splashScreen;
         final Consumer<String> progressConsumer;
+
         if (useUI) {
             final float progressStep = 1F / 7F;
             foregroundWindow = splashScreen = new SplashScreen();
+
             progressConsumer = (text) -> {
                 splashScreen.setProgress(splashScreen.getProgress() + progressStep);
+
                 splashScreen.setText(text);
             };
+
             Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
                 ViaProxyWindow.showException(e);
+
                 System.exit(1);
             });
         } else {
             splashScreen = null;
+
             progressConsumer = text -> {
             };
         }
+
         progressConsumer.accept("Initializing ViaProxyPlus");
 
         ConsoleHandler.hookConsole();
@@ -216,15 +246,23 @@ public class ViaProxy {
         ClassLoaderPriorityUtil.loadOverridingJars();
 
         progressConsumer.accept("Loading Plugins");
+
         PLUGIN_MANAGER = new PluginManager();
+
         progressConsumer.accept("Loading Protocol Translators");
+
         ProtocolTranslator.init();
+
         progressConsumer.accept("Loading Saves");
+
         SAVE_MANAGER = new SaveManager();
+
         progressConsumer.accept("Loading Config");
+
         final File viaProxyConfigFile;
         if (useConfig) {
             final File absoluteConfigFile = new File(args[1]);
+
             if (absoluteConfigFile.isAbsolute()) {
                 viaProxyConfigFile = absoluteConfigFile;
             } else {
@@ -233,30 +271,41 @@ public class ViaProxy {
         } else {
             viaProxyConfigFile = new File(ViaProxy.getCwd(), "viaproxy.yml");
         }
+
         final boolean firstStart = !viaProxyConfigFile.exists();
+
         CONFIG = ViaProxyConfig.create(viaProxyConfigFile);
 
         if (useUI) {
             progressConsumer.accept("Loading GUI");
+
             SwingUtilities.invokeAndWait(() -> {
                 try {
                     foregroundWindow = viaProxyWindow = new ViaProxyWindow();
+                    
                     progressConsumer.accept("Done");
+
                     splashScreen.dispose();
                 } catch (Throwable e) {
                     Logger.LOGGER.fatal("Failed to initialize UI", e);
+
                     System.exit(1);
                 }
             });
+
             if (System.getProperty("skipUpdateCheck") == null) {
                 CompletableFuture.runAsync(new UpdateCheckTask(true));
             }
+
             EVENT_MANAGER.call(new ViaProxyLoadedEvent());
+
             Logger.LOGGER.info("ViaProxyPlus started successfully!");
         } else {
             if (useCLI) {
                 final String[] cliArgs = new String[args.length - 1];
+
                 System.arraycopy(args, 1, cliArgs, 0, cliArgs.length);
+
                 try {
                     CONFIG.loadFromArguments(cliArgs);
                 } catch (Throwable e) {
@@ -264,14 +313,18 @@ public class ViaProxy {
                 }
             } else if (firstStart) {
                 Logger.LOGGER.info("This is the first start of ViaProxyPlus. Please configure the settings in the " + viaProxyConfigFile.getName() + " file and restart ViaProxyPlus.");
+
                 System.exit(0);
             }
 
             if (System.getProperty("skipUpdateCheck") == null) {
                 CompletableFuture.runAsync(new UpdateCheckTask(false));
             }
+
             EVENT_MANAGER.call(new ViaProxyLoadedEvent());
+
             Logger.LOGGER.info("ViaProxyPlus started successfully!");
+
             ViaProxy.startProxy();
 
             Thread.sleep(Integer.MAX_VALUE);
@@ -284,12 +337,17 @@ public class ViaProxy {
         }
         try {
             Logger.LOGGER.info("Starting proxy server");
+
             currentProxyServer = new NetServer(new Client2ProxyChannelInitializer(() -> EVENT_MANAGER.call(new Client2ProxyHandlerCreationEvent(new Client2ProxyHandler(), false)).getHandler()));
+
             EVENT_MANAGER.call(new ProxyStartEvent());
+
             Logger.LOGGER.info("Binding proxy server to " + AddressUtil.toString(CONFIG.getBindAddress()));
+
             currentProxyServer.bind(CONFIG.getBindAddress(), false);
         } catch (Throwable e) {
             currentProxyServer = null;
+
             throw e;
         }
     }
@@ -313,10 +371,13 @@ public class ViaProxy {
 
     private static void loadNetty() {
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.DISABLED);
+
         if (System.getProperty("io.netty.allocator.type") == null) {
             System.setProperty("io.netty.allocator.type", PlatformDependent.isAndroid() ? "unpooled" : "pooled");
         }
+
         MCPipeline.useOptimizedPipeline();
+
         CLIENT_CHANNELS = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     }
 
@@ -351,5 +412,4 @@ public class ViaProxy {
     public static JFrame getForegroundWindow() {
         return foregroundWindow;
     }
-
 }
