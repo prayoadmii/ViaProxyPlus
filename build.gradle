@@ -75,7 +75,7 @@ dependencies {
     includeInJar "net.sf.jopt-simple:jopt-simple:5.0.4"
     includeInJar "org.apache.logging.log4j:log4j-core:2.26.1"
     includeInJar "org.apache.logging.log4j:log4j-slf4j2-impl:2.26.1"
-    includeInJar "org.jline:jansi:4.4.6"
+    includeInJar "org.jline:jansi:4.4.7"
     includeInJar("com.mojang:authlib:6.0.58") {
         exclude group: "org.slf4j", module: "slf4j-api"
     }
@@ -93,13 +93,13 @@ dependencies {
     includeInJar("net.raphimc.netminecraft:all:3.1.7") {
         exclude group: "com.google.code.gson", module: "gson"
     }
-    includeInJar("io.netty:netty-codec-haproxy:4.2.18.Final") {
+    includeInJar("io.netty:netty-codec-haproxy:4.2.19.Final") {
         transitive = false
     }
-    includeInJar("io.netty:netty-handler-proxy:4.2.18.Final") {
+    includeInJar("io.netty:netty-handler-proxy:4.2.19.Final") {
         transitive = false
     }
-    includeInJar("io.netty:netty-codec-socks:4.2.18.Final") {
+    includeInJar("io.netty:netty-codec-socks:4.2.19.Final") {
         transitive = false
     }
     includeInJar("net.raphimc:MinecraftAuth:5.0.3-20260923.192703-2") {
