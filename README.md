@@ -5,6 +5,15 @@
 
 ### **WARNING!**
 
+## Supported Server versions
+- Release (1.0.0 - 26.3)
+- Beta (b1.0 - b1.8.1)
+- Alpha (a1.0.15 - a1.2.6)
+- Classic (c0.0.15 - c0.30 including [CPE](https://wiki.vg/Classic_Protocol_Extension))
+- April Fools (3D Shareware, 20w14infinite, 25w14craftmine)
+- Combat Snapshots (Combat Test 8c)
+- Bedrock Edition 1.26.60 (WIP, [Many features are missing](https://github.com/RaphiMC/ViaBedrock#features))
+
 **Java 8 Jar Are No-Longer Available And Supported After ViaProxyPlus 3.7.4**
 
 **You Can Build Java 8 Jar By Clone This Repository And Run `./gradlew downgradeJar`**

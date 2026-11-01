@@ -29,7 +29,6 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import net.lenni0451.mcping.ServerAddress;
-import net.lenni0451.mcping.responses.IPingResponse;
 import net.lenni0451.mcping.responses.MCPingResponse;
 import net.raphimc.netminecraft.constants.ConnectionState;
 import net.raphimc.netminecraft.constants.IntendedState;
@@ -56,13 +55,11 @@ import git.prayoadmii.viaproxyplus.proxy.session.UserOptions;
 import git.prayoadmii.viaproxyplus.proxy.util.*;
 import git.prayoadmii.viaproxyplus.saves.impl.accounts.ClassicAccount;
 import git.prayoadmii.viaproxyplus.util.*;
-import git.prayoadmii.viaproxyplus.util.address.NetherNetHttpAddress;
 import git.prayoadmii.viaproxyplus.util.logging.Logger;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 public class Client2ProxyHandler extends SimpleChannelInboundHandler<Packet> {
@@ -123,7 +120,7 @@ public class Client2ProxyHandler extends SimpleChannelInboundHandler<Packet> {
         this.proxyConnection.setC2pConnectionState(packet.intendedState.getConnectionState());
 
         if (!ProtocolVersion.isRegistered(clientVersion.getVersionType(), clientVersion.getOriginalVersion())) {
-            this.proxyConnection.kickClient("§cYour client version is not supported by ViaProxy!");
+            this.proxyConnection.kickClient("§cYour client version (Protocol " + clientVersion.getOriginalVersion() + ") is not supported by ViaProxy!");
         }
 
         final String[] handshakeParts;
@@ -202,13 +199,7 @@ public class Client2ProxyHandler extends SimpleChannelInboundHandler<Packet> {
             if (!ViaProxy.getConfig().getCustomMotd().isBlank()) {
                 this.proxyConnection.kickClient(ViaProxy.getConfig().getCustomMotd());
             } else if (isBedrockPing) {
-                final CompletableFuture<? extends IPingResponse> pingFuture;
-                if (serverAddress instanceof NetherNetHttpAddress) {
-                    pingFuture = StatusPingUtil.pingBedrockNetherNetHttp(serverAddress);
-                } else {
-                    pingFuture = StatusPingUtil.pingBedrockRakNet(serverAddress);
-                }
-                pingFuture.thenAccept(response -> {
+                StatusPingUtil.pingBedrockNetherNetHttp(serverAddress).thenAccept(response -> {
                     final MCPingResponse javaResponse = StatusPingUtil.convertToJavaPingResponse(response);
                     javaResponse.version.protocol = clientVersion.getOriginalVersion();
                     this.proxyConnection.getC2P().writeAndFlush(new S2CStatusResponsePacket(new Gson().toJson(javaResponse))).addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);

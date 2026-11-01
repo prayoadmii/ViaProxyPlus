@@ -17,9 +17,8 @@
  */
 package git.prayoadmii.viaproxyplus.util.address;
 
-import org.cloudburstmc.netty.channel.nethernet.config.NetherNetAddress;
+public class NetherNetXboxAddress extends org.cloudburstmc.netty.channel.nethernet.config.NetherNetAddress implements NetherNetAddress {
 
-public class NetherNetXboxAddress extends NetherNetAddress implements git.prayoadmii.viaproxyplus.util.address.NetherNetAddress {
     public NetherNetXboxAddress(final String networkId) {
         super(networkId);
     }
