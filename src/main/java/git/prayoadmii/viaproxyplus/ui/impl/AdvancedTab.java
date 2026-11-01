@@ -47,6 +47,7 @@ public class AdvancedTab extends UITab {
     JTextField bindAddress;
     JTextField proxy;
     JCheckBox proxyOnlineMode;
+    JComboBox<ViaProxyConfig.ProxyOnlineModeProvider> proxyOnlineModeProvider;
     public JCheckBox legacySkinLoading;
     JCheckBox chatSigning;
     JCheckBox ignorePacketTranslationErrors;
@@ -101,27 +102,25 @@ public class AdvancedTab extends UITab {
             this.proxyOnlineMode = new JCheckBox(I18n.get("tab.advanced.proxy_online_mode.label"));
             this.proxyOnlineMode.setToolTipText(I18n.get("tab.advanced.proxy_online_mode.tooltip"));
             this.proxyOnlineMode.setSelected(ViaProxy.getConfig().isProxyOnlineMode());
-            this.proxyOnlineMode.addActionListener(event -> {
-                if (!this.proxyOnlineMode.isSelected()) return;
+            GBC.create(body).grid(0, gridy++).insets(BODY_BLOCK_PADDING, BORDER_PADDING, 0, 0).anchor(GBC.NORTHWEST).add(this.proxyOnlineMode);
 
-                final Object[] options = {"Mojang", "Ely.By", I18n.get("generic.cancel")};
-                final int selected = JOptionPane.showOptionDialog(this.viaProxyWindow,
-                    I18n.get("tab.advanced.proxy_online_mode.popup.prompt"),
-                    I18n.get("tab.advanced.proxy_online_mode.label"),
-                    JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    options,
-                    options[0]);
-                if (selected == 0) {
-                    ViaProxy.getConfig().setProxyOnlineModeProvider(ViaProxyConfig.ProxyOnlineModeProvider.MOJANG);
-                } else if (selected == 1) {
-                    ViaProxy.getConfig().setProxyOnlineModeProvider(ViaProxyConfig.ProxyOnlineModeProvider.ELY_BY);
-                } else {
-                    this.proxyOnlineMode.setSelected(false);
+            JLabel proxyOnlineModeProviderLabel = new JLabel(I18n.get("tab.advanced.proxy_online_mode.provider.label"));
+            GBC.create(body).grid(0, gridy++).insets(0, BORDER_PADDING, 0, 0).anchor(GBC.NORTHWEST).add(proxyOnlineModeProviderLabel);
+
+            this.proxyOnlineModeProvider = new JComboBox<>(ViaProxyConfig.ProxyOnlineModeProvider.values());
+            this.proxyOnlineModeProvider.setRenderer(new DefaultListCellRenderer() {
+                @Override
+                public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                    if (value == ViaProxyConfig.ProxyOnlineModeProvider.MOJANG) {
+                        value = "Mojang";
+                    } else if (value == ViaProxyConfig.ProxyOnlineModeProvider.ELY_BY) {
+                        value = "Ely.By";
+                    }
+                    return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 }
             });
-            checkboxes.add(this.proxyOnlineMode);
+            this.proxyOnlineModeProvider.setSelectedItem(ViaProxy.getConfig().getProxyOnlineModeProvider());
+            GBC.create(body).grid(0, gridy++).weightx(1).insets(0, BORDER_PADDING, 0, BORDER_PADDING).fill(GBC.HORIZONTAL).add(this.proxyOnlineModeProvider);
         }
         {
             this.legacySkinLoading = new JCheckBox(I18n.get("tab.advanced.legacy_skin_loading.label"));
@@ -237,6 +236,7 @@ public class AdvancedTab extends UITab {
         ViaProxy.getSaveManager().uiSave.put("bind_address", this.bindAddress.getText());
         ViaProxy.getSaveManager().uiSave.put("proxy", this.proxy.getText());
         ViaProxy.getConfig().setProxyOnlineMode(this.proxyOnlineMode.isSelected());
+        ViaProxy.getConfig().setProxyOnlineModeProvider((ViaProxyConfig.ProxyOnlineModeProvider) this.proxyOnlineModeProvider.getSelectedItem());
         ViaProxy.getSaveManager().uiSave.put("legacy_skin_loading", String.valueOf(this.legacySkinLoading.isSelected()));
         ViaProxy.getConfig().setChatSigning(this.chatSigning.isSelected());
         ViaProxy.getConfig().setIgnoreProtocolTranslationErrors(this.ignorePacketTranslationErrors.isSelected());
