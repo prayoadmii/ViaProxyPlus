@@ -48,7 +48,7 @@ public final class ElyByMinecraftSessionService implements MinecraftSessionServi
         if (response.has("properties") && response.get("properties").isJsonArray()) {
             for (final JsonElement propertyElement : response.getAsJsonArray("properties")) {
                 final JsonObject property = propertyElement.getAsJsonObject();
-                profile.getProperties().put(property.get("name").getAsString(), new Property(
+                profile.properties().put(property.get("name").getAsString(), new Property(
                     property.get("name").getAsString(),
                     property.get("value").getAsString(),
                     property.has("signature") ? property.get("signature").getAsString() : null
@@ -60,7 +60,7 @@ public final class ElyByMinecraftSessionService implements MinecraftSessionServi
 
     @Override
     public Property getPackedTextures(final GameProfile profile) {
-        return profile.getProperties().get("textures").stream().findFirst().orElse(null);
+        return profile.properties().get("textures").stream().findFirst().orElse(null);
     }
 
     @Override

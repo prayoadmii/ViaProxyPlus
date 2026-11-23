@@ -180,7 +180,7 @@ public class ConnectedPlayersTab extends UITab {
     private String getPlayerName(final ProxyConnection connection) {
         if (connection.getClientUsername() != null) return connection.getClientUsername();
         final GameProfile gameProfile = connection.getGameProfile();
-        if (gameProfile != null && gameProfile.getName() != null) return gameProfile.getName();
+        if (gameProfile != null && gameProfile.name() != null) return gameProfile.name();
         if (connection.getLoginHelloPacket() != null) return connection.getLoginHelloPacket().name;
         return I18n.get("tab.connected_players.connecting");
     }

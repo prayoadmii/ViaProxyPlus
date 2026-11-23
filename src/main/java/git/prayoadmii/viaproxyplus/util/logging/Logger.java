@@ -35,16 +35,13 @@ public class Logger {
         PluginManager.addPackage("git.prayoadmii.viaproxyplus.util.logging");
     }
 
-    public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger("ViaProxyPlus");
+    public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger("ViaProxy");
 
     public static final PrintStream SYSOUT = System.out;
     public static final PrintStream SYSERR = System.err;
 
     public static void setup() {
-        if (System.console() != null) { // jANSI is the best lib. If there is no console it just segfaults the JVM process. Thanks!
-            AnsiConsole.systemInstall();
-        }
-
+        AnsiConsole.systemInstall();
         System.setErr(new LoggerPrintStream("STDERR", SYSERR));
         System.setOut(new LoggerPrintStream("STDOUT", SYSOUT));
     }
@@ -64,12 +61,11 @@ public class Logger {
     public static void u_log(final Level level, final String title, final ProxyConnection proxyConnection, final String msg) {
         final SocketAddress address = proxyConnection.getC2P().remoteAddress();
         final GameProfile gameProfile = proxyConnection.getGameProfile();
-        
         u_log(level, title, address, gameProfile, msg);
     }
 
     public static void u_log(final Level level, final String title, final SocketAddress address, final GameProfile gameProfile, final String msg) {
-        LOGGER.log(level, "[" + title.toUpperCase(Locale.ROOT) + "] (" + AddressUtil.toString(address) + " | " + (gameProfile != null ? gameProfile.getName() : "null") + ") " + msg);
+        LOGGER.log(level, "[{}] ({} | {}) {}", title.toUpperCase(Locale.ROOT), AddressUtil.toString(address), gameProfile != null ? gameProfile.name() : "null", msg);
     }
 
 }

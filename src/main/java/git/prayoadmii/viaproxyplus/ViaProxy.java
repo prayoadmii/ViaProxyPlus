@@ -47,6 +47,7 @@ import git.prayoadmii.viaproxyplus.plugins.events.ProxyStartEvent;
 import git.prayoadmii.viaproxyplus.plugins.events.ProxyStopEvent;
 import git.prayoadmii.viaproxyplus.plugins.events.ViaProxyLoadedEvent;
 import git.prayoadmii.viaproxyplus.protocoltranslator.ProtocolTranslator;
+import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyCLIConfig;
 import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import git.prayoadmii.viaproxyplus.proxy.client2proxy.Client2ProxyChannelInitializer;
 import git.prayoadmii.viaproxyplus.proxy.client2proxy.Client2ProxyHandler;
@@ -81,7 +82,7 @@ public class ViaProxy {
     private static /*final*/ File CWD;
     private static /*final*/ PluginManager PLUGIN_MANAGER;
     private static /*final*/ SaveManager SAVE_MANAGER;
-    private static /*final*/ ViaProxyConfig CONFIG;
+    private static /*final*/ ViaProxyCLIConfig CONFIG;
     private static /*final*/ ChannelGroup CLIENT_CHANNELS;
 
     private static Instrumentation instrumentation;
@@ -274,7 +275,7 @@ public class ViaProxy {
 
         final boolean firstStart = !viaProxyConfigFile.exists();
 
-        CONFIG = ViaProxyConfig.create(viaProxyConfigFile);
+        CONFIG = ViaProxyCLIConfig.create(viaProxyConfigFile);
 
         if (useUI) {
             progressConsumer.accept("Loading GUI");

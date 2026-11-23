@@ -72,11 +72,10 @@ dependencies {
     includeInJar "com.formdev:flatlaf-extras:3.7.2"
     includeInJar "org.apache.commons:commons-lang3:3.21.0"
     includeInJar "commons-io:commons-io:2.22.0"
-    includeInJar "net.sf.jopt-simple:jopt-simple:5.0.4"
     includeInJar "org.apache.logging.log4j:log4j-core:2.26.1"
     includeInJar "org.apache.logging.log4j:log4j-slf4j2-impl:2.26.1"
     includeInJar "org.jline:jansi:4.4.8"
-    includeInJar("com.mojang:authlib:6.0.58") {
+    includeInJar("com.mojang:authlib:7.0.63") {
         exclude group: "org.slf4j", module: "slf4j-api"
     }
     includeInJar "net.lenni0451.classtransform:mixinstranslator:1.15.1"
@@ -112,23 +111,15 @@ dependencies {
     }
     includeInJar "dev.opencollab:libdatachannel-java-arch-detect:0.24.6.0-20260930.214316-2"
     includeInJar "gs.mclo:api:6.2.1"
-    includeInJar "net.lenni0451:optconfig:1.1.1"
+    includeInJar "net.lenni0451.optconfig:cli:2.0.0"
     includeInJar "javazoom:jlayer:1.0.1"
 
     includeInJarJ8(compileOnly("xyz.wagyourtail.jvmdowngrader:jvmdowngrader:2.0.1"))
     includeInJarJ8 "xyz.wagyourtail.jvmdowngrader:jvmdowngrader-java-api:2.0.1:downgraded-8"
 }
 
-def runDir = layout.projectDirectory.dir("run")
-
-runDir.asFile.mkdirs()
-
 application {
     mainClass = "git.prayoadmii.viaproxyplus.ViaProxy"
-}
-
-tasks.withType(JavaExec).configureEach {
-    workingDir(runDir)
 }
 
 jar {
@@ -140,8 +131,7 @@ jar {
 }
 
 downgradeJar {
-    dependsOn(build)
-
+    dependsOn(configurations.includeInJarJ8)
     from {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         configurations.includeInJarJ8.collect {
@@ -152,11 +142,10 @@ downgradeJar {
     }
 
     downgradeTo = JavaVersion.VERSION_1_8
-
     ignoreWarningsIn.add("net/lenni0451/commons/httpclient/executor/HttpClientExecutor")
-
     archiveClassifier = null
     archiveVersion = project.version + "+java8"
 }
+build.finalizedBy("downgradeJar")
 
 tasks.javadoc.enabled = false

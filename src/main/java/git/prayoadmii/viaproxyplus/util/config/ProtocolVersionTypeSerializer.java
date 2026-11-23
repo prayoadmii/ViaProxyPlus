@@ -18,24 +18,20 @@
 package git.prayoadmii.viaproxyplus.util.config;
 
 import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
-
-import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import net.lenni0451.optconfig.serializer.ConfigTypeSerializer;
+import net.lenni0451.optconfig.serializer.info.DeserializerInfo;
+import net.lenni0451.optconfig.serializer.info.SerializerInfo;
 
-public class ProtocolVersionTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, ProtocolVersion> {
+public class ProtocolVersionTypeSerializer implements ConfigTypeSerializer<ProtocolVersion> {
 
-    public ProtocolVersionTypeSerializer(final ViaProxyConfig config) {
-        super(config);
+    @Override
+    public ProtocolVersion deserialize(final DeserializerInfo<ProtocolVersion> info) {
+        return ProtocolVersion.getClosest((String) info.value());
     }
 
     @Override
-    public ProtocolVersion deserialize(final Class<ProtocolVersion> typeClass, final Object serializedObject) {
-        return ProtocolVersion.getClosest((String) serializedObject);
-    }
-
-    @Override
-    public Object serialize(final ProtocolVersion object) {
-        return object.getName();
+    public Object serialize(final SerializerInfo<ProtocolVersion> info) {
+        return info.value().getName();
     }
 
 }

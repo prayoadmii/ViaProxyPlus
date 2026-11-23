@@ -18,26 +18,24 @@
 package git.prayoadmii.viaproxyplus.util.config;
 
 import net.lenni0451.optconfig.serializer.ConfigTypeSerializer;
-
-import java.net.SocketAddress;
-
+import net.lenni0451.optconfig.serializer.info.DeserializerInfo;
+import net.lenni0451.optconfig.serializer.info.SerializerInfo;
 import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
 import git.prayoadmii.viaproxyplus.util.AddressUtil;
 
-public class TargetAddressTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, SocketAddress> {
+import java.net.SocketAddress;
 
-    public TargetAddressTypeSerializer(final ViaProxyConfig config) {
-        super(config);
+public class BackendAddressTypeSerializer implements ConfigTypeSerializer<SocketAddress> {
+
+    @Override
+    public SocketAddress deserialize(final DeserializerInfo<SocketAddress> info) {
+        final ViaProxyConfig config = (ViaProxyConfig) info.configInstance();
+        return AddressUtil.parse((String) info.value(), config.getBackend().getVersion());
     }
 
     @Override
-    public SocketAddress deserialize(final Class<SocketAddress> typeClass, final Object serializedObject) {
-        return AddressUtil.parse((String) serializedObject, this.config.getTargetVersion());
-    }
-
-    @Override
-    public Object serialize(final SocketAddress object) {
-        return AddressUtil.toString(object);
+    public Object serialize(final SerializerInfo<SocketAddress> info) {
+        return AddressUtil.toString(info.value());
     }
 
 }

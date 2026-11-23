@@ -18,22 +18,18 @@
 package git.prayoadmii.viaproxyplus.util.config;
 
 import net.lenni0451.optconfig.serializer.ConfigTypeSerializer;
+import net.lenni0451.optconfig.serializer.info.DeserializerInfo;
+import net.lenni0451.optconfig.serializer.info.SerializerInfo;
+import git.prayoadmii.viaproxyplus.util.Proxy;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
-import git.prayoadmii.viaproxyplus.util.Proxy;
-
-public class ProxyTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, Proxy> {
-
-    public ProxyTypeSerializer(final ViaProxyConfig config) {
-        super(config);
-    }
+public class ProxyTypeSerializer implements ConfigTypeSerializer<Proxy> {
 
     @Override
-    public Proxy deserialize(final Class<Proxy> typeClass, final Object serializedObject) {
-        final String proxyUrl = (String) serializedObject;
+    public Proxy deserialize(final DeserializerInfo<Proxy> info) {
+        final String proxyUrl = (String) info.value();
         if (!proxyUrl.isBlank()) {
             try {
                 return new Proxy(new URI(proxyUrl));
@@ -45,9 +41,9 @@ public class ProxyTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, Pr
     }
 
     @Override
-    public Object serialize(final Proxy object) {
-        if (object != null) {
-            return object.toURI().toString();
+    public Object serialize(final SerializerInfo<Proxy> info) {
+        if (info.value() != null) {
+            return info.value().toURI().toString();
         } else {
             return "";
         }

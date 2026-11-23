@@ -121,7 +121,7 @@ public class LoginPacketHandler extends PacketHandler {
             this.proxyConnection.getC2P().attr(MCPipeline.ENCRYPTION_ATTRIBUTE_KEY).set(new AESEncryption(secretKey));
 
             HTTP_EXECUTOR.submit(() -> {
-                final String userName = this.proxyConnection.getGameProfile().getName();
+                final String userName = this.proxyConnection.getGameProfile().name();
                 try {
                     final String serverHash = new BigInteger(CryptUtil.computeServerIdHash("", KEY_PAIR.getPublic(), secretKey)).toString(16);
                     final ProfileResult profileResult;
@@ -136,7 +136,7 @@ public class LoginPacketHandler extends PacketHandler {
                     } else {
                         this.proxyConnection.setGameProfile(profileResult.profile());
                     }
-                    Logger.u_info("auth", this.proxyConnection, "Authenticated as " + this.proxyConnection.getGameProfile().getId().toString());
+                    Logger.u_info("auth", this.proxyConnection, "Authenticated as " + this.proxyConnection.getGameProfile().id().toString());
                 } catch (CloseAndReturn ignored) {
                 } catch (Throwable e) {
                     Logger.LOGGER.error("Failed to make session request for user '" + userName + "'!", e);

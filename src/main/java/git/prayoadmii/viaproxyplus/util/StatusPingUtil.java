@@ -21,13 +21,11 @@ import com.viaversion.viaversion.api.protocol.version.ProtocolVersion;
 import net.lenni0451.mcping.MCPing;
 import net.lenni0451.mcping.pings.sockets.impl.factories.SocketChannelSocketFactory;
 import net.lenni0451.mcping.responses.BedrockNethernetPingResponse;
-import net.lenni0451.mcping.responses.BedrockRaknetPingResponse;
 import net.lenni0451.mcping.responses.IPingResponse;
 import net.lenni0451.mcping.responses.MCPingResponse;
 import git.prayoadmii.viaproxyplus.ViaProxy;
 
 import java.net.SocketAddress;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -39,7 +37,7 @@ public class StatusPingUtil {
                 .tcpSocketFactory(new SocketChannelSocketFactory())
                 .address(AddressUtil.toJ16UnixSocketAddress(serverAddress))
                 .noResolve()
-                .timeout(ViaProxy.getConfig().getConnectTimeout() / 2, ViaProxy.getConfig().getConnectTimeout() / 2)
+                .timeout(ViaProxy.getConfig().getBackend().getConnectTimeout() / 2, ViaProxy.getConfig().getBackend().getConnectTimeout() / 2)
                 .getAsync()
                 .thenApply(response -> {
                     if (response.version.protocol == clientVersion.getOriginalVersion()) { // If the server is on the same version as the client, we can just connect
@@ -61,21 +59,12 @@ public class StatusPingUtil {
                 });
     }
 
-    public static CompletableFuture<BedrockRaknetPingResponse> pingBedrockRakNet(final SocketAddress serverAddress) {
-        return MCPing
-                .pingBedrockRaknet()
-                .address(AddressUtil.toJ16UnixSocketAddress(serverAddress))
-                .noResolve()
-                .timeout(ViaProxy.getConfig().getConnectTimeout() / 2, ViaProxy.getConfig().getConnectTimeout() / 2)
-                .getAsync();
-    }
-
     public static CompletableFuture<BedrockNethernetPingResponse> pingBedrockNetherNetHttp(final SocketAddress serverAddress) {
         return MCPing
                 .pingBedrockNethernet()
                 .address(AddressUtil.toJ16UnixSocketAddress(serverAddress))
                 .noResolve()
-                .timeout(ViaProxy.getConfig().getConnectTimeout() / 2, ViaProxy.getConfig().getConnectTimeout() / 2)
+                .timeout(ViaProxy.getConfig().getBackend().getConnectTimeout() / 2, ViaProxy.getConfig().getBackend().getConnectTimeout() / 2)
                 .getAsync();
     }
 
@@ -97,9 +86,6 @@ public class StatusPingUtil {
             player.id = "00000000-0000-0000-0000-000000000000";
             return player;
         }).toArray(MCPingResponse.Players.Player[]::new);
-        if (response instanceof BedrockRaknetPingResponse bedrockResponse) {
-            javaResponse.version.name = Objects.requireNonNullElse(bedrockResponse.gameId, "") + " " + response.getVersionName();
-        }
         return javaResponse;
     }
 

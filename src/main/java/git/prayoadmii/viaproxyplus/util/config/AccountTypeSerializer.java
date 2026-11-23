@@ -18,24 +18,20 @@
 package git.prayoadmii.viaproxyplus.util.config;
 
 import net.lenni0451.optconfig.serializer.ConfigTypeSerializer;
+import net.lenni0451.optconfig.serializer.info.DeserializerInfo;
+import net.lenni0451.optconfig.serializer.info.SerializerInfo;
+import git.prayoadmii.viaproxyplus.ViaProxy;
+import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
 
 import java.util.List;
 
-import git.prayoadmii.viaproxyplus.ViaProxy;
-import git.prayoadmii.viaproxyplus.protocoltranslator.viaproxy.ViaProxyConfig;
-import git.prayoadmii.viaproxyplus.saves.impl.accounts.Account;
-
-public class AccountTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, Account> {
-
-    public AccountTypeSerializer(final ViaProxyConfig config) {
-        super(config);
-    }
+public class AccountTypeSerializer implements ConfigTypeSerializer<Account> {
 
     @Override
-    public Account deserialize(final Class<Account> typeClass, final Object serializedObject) {
+    public Account deserialize(final DeserializerInfo<Account> info) {
         final List<Account> accounts = ViaProxy.getSaveManager().accountsSave.getAccounts();
-        final int accountIndex = (int) serializedObject;
-        if (this.config.getAuthMethod() == ViaProxyConfig.AuthMethod.ACCOUNT && accountIndex >= 0 && accountIndex < accounts.size()) {
+        final int accountIndex = (int) info.value();
+        if (accountIndex >= 0 && accountIndex < accounts.size()) {
             return accounts.get(accountIndex);
         } else {
             return null;
@@ -43,11 +39,11 @@ public class AccountTypeSerializer extends ConfigTypeSerializer<ViaProxyConfig, 
     }
 
     @Override
-    public Object serialize(final Account object) {
-        if (object != null) {
-            return ViaProxy.getSaveManager().accountsSave.getAccounts().indexOf(object);
+    public Object serialize(final SerializerInfo<Account> info) {
+        if (info.value() != null) {
+            return ViaProxy.getSaveManager().accountsSave.getAccounts().indexOf(info.value());
         } else {
-            return 0;
+            return -1;
         }
     }
 
